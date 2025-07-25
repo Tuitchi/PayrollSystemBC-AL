@@ -1,0 +1,1467 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
+  <AutoRefresh>0</AutoRefresh>
+  <DataSources>
+    <DataSource Name="DataSource">
+      <ConnectionProperties>
+        <DataProvider>SQL</DataProvider>
+        <ConnectString />
+      </ConnectionProperties>
+      <rd:SecurityType>None</rd:SecurityType>
+    </DataSource>
+  </DataSources>
+  <ReportSections>
+    <ReportSection>
+      <Body>
+        <Height>6in</Height>
+        <Style>
+          <BackgroundColor>White</BackgroundColor>
+        </Style>
+        <ReportItems>
+          <!-- Header Section -->
+          <Rectangle Name="HeaderBackground">
+            <Top>0.1in</Top>
+            <Left>0.1in</Left>
+            <Height>0.8in</Height>
+            <Width>6.8in</Width>
+            <Style>
+              <BackgroundColor>#F0F8FF</BackgroundColor> <!-- Light blue header -->
+              <Border>
+                <Style>Solid</Style>
+                <Color>#336699</Color>
+                <Width>1pt</Width>
+              </Border>
+            </Style>
+          </Rectangle>
+
+          <Textbox Name="CompanyName">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>=First(Fields!CompanyName.Value)</Value>
+                    <Style>
+                      <FontSize>16pt</FontSize>
+                      <FontWeight>Bold</FontWeight>
+                      <Color>#336699</Color>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style>
+                  <TextAlign>Center</TextAlign>
+                </Style>
+              </Paragraph>
+            </Paragraphs>
+            <Top>0.25in</Top>
+            <Left>0.25in</Left>
+            <Height>0.3in</Height>
+            <Width>6.5in</Width>
+            <ZIndex>1</ZIndex>
+            <Style />
+          </Textbox>
+          <Textbox Name="CompanyAddress">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>=First(Fields!CompanyAddress.Value)</Value>
+                    <Style>
+                      <FontSize>9pt</FontSize>
+                      <Color>#333333</Color>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style>
+                  <TextAlign>Center</TextAlign>
+                </Style>
+              </Paragraph>
+            </Paragraphs>
+            <Top>0.55in</Top>
+            <Left>0.25in</Left>
+            <Height>0.2in</Height>
+            <Width>6.5in</Width>
+            <ZIndex>2</ZIndex>
+            <Style />
+          </Textbox>
+          <Textbox Name="ReportTitle">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>=First(Fields!ReportTitle.Value)</Value>
+                    <Style>
+                      <FontSize>13pt</FontSize>
+                      <FontWeight>Bold</FontWeight>
+                      <Color>#336699</Color>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style>
+                  <TextAlign>Center</TextAlign>
+                </Style>
+              </Paragraph>
+            </Paragraphs>
+            <Top>1.05in</Top>
+            <Left>0.25in</Left>
+            <Height>0.3in</Height>
+            <Width>6.5in</Width>
+            <ZIndex>3</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
+          <!-- Employee Information Section -->
+          <Rectangle Name="EmployeeInfo">
+            <Top>1.5in</Top>
+            <Left>0.25in</Left>
+            <Height>0.85in</Height>
+            <Width>6.5in</Width>
+            <ZIndex>4</ZIndex>
+            <Style>
+              <Border>
+                <Style>Solid</Style>
+                <Color>#336699</Color>
+              </Border>
+              <BackgroundColor>#F8F8F8</BackgroundColor>
+              <ShadowOffset>2pt</ShadowOffset>
+            </Style>
+            <ReportItems>
+              <Textbox Name="EmployeeIdLabel">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>Employee ID:</Value>
+                        <Style>
+                          <FontWeight>Bold</FontWeight>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style />
+                  </Paragraph>
+                </Paragraphs>
+                <Top>0.1in</Top>
+                <Left>0.1in</Left>
+                <Height>0.2in</Height>
+                <Width>1in</Width>
+                <Style />
+              </Textbox>
+              <Textbox Name="EmployeeId">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>=First(Fields!EmployeeId.Value)</Value>
+                        <Style />
+                      </TextRun>
+                    </TextRuns>
+                    <Style />
+                  </Paragraph>
+                </Paragraphs>
+                <Top>0.1in</Top>
+                <Left>1.1in</Left>
+                <Height>0.2in</Height>
+                <Width>2in</Width>
+                <ZIndex>1</ZIndex>
+                <Style />
+              </Textbox>
+              <Textbox Name="EmployeeNameLabel">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>Employee Name:</Value>
+                        <Style>
+                          <FontWeight>Bold</FontWeight>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style />
+                  </Paragraph>
+                </Paragraphs>
+                <Top>0.1in</Top>
+                <Left>3.25in</Left>
+                <Height>0.2in</Height>
+                <Width>1.25in</Width>
+                <ZIndex>2</ZIndex>
+                <Style />
+              </Textbox>
+              <Textbox Name="EmployeeName">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>=First(Fields!EmployeeName.Value)</Value>
+                        <Style />
+                      </TextRun>
+                    </TextRuns>
+                    <Style />
+                  </Paragraph>
+                </Paragraphs>
+                <Top>0.1in</Top>
+                <Left>4.5in</Left>
+                <Height>0.2in</Height>
+                <Width>1.9in</Width>
+                <ZIndex>3</ZIndex>
+                <Style />
+              </Textbox>
+              <Textbox Name="PeriodLabel">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>Pay Period:</Value>
+                        <Style>
+                          <FontWeight>Bold</FontWeight>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style />
+                  </Paragraph>
+                </Paragraphs>
+                <Top>0.4in</Top>
+                <Left>0.1in</Left>
+                <Height>0.2in</Height>
+                <Width>1in</Width>
+                <ZIndex>4</ZIndex>
+                <Style />
+              </Textbox>
+              <Textbox Name="PeriodDates">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>=FORMAT(First(Fields!PeriodStart.Value), "MMM dd, yyyy") + " - " + FORMAT(First(Fields!PeriodEnd.Value), "MMM dd, yyyy")</Value>
+                        <Style />
+                      </TextRun>
+                    </TextRuns>
+                    <Style />
+                  </Paragraph>
+                </Paragraphs>
+                <Top>0.4in</Top>
+                <Left>1.1in</Left>
+                <Height>0.2in</Height>
+                <Width>2in</Width>
+                <ZIndex>5</ZIndex>
+                <Style />
+              </Textbox>
+              <Textbox Name="PostDateLabel">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>Post Date:</Value>
+                        <Style>
+                          <FontWeight>Bold</FontWeight>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style />
+                  </Paragraph>
+                </Paragraphs>
+                <Top>0.4in</Top>
+                <Left>3.25in</Left>
+                <Height>0.2in</Height>
+                <Width>1.25in</Width>
+                <ZIndex>6</ZIndex>
+                <Style />
+              </Textbox>
+              <Textbox Name="PostDate">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>=FORMAT(First(Fields!PostDate.Value), "MMM dd, yyyy")</Value>
+                        <Style />
+                      </TextRun>
+                    </TextRuns>
+                    <Style />
+                  </Paragraph>
+                </Paragraphs>
+                <Top>0.4in</Top>
+                <Left>4.5in</Left>
+                <Height>0.2in</Height>
+                <Width>1.9in</Width>
+                <ZIndex>7</ZIndex>
+                <Style />
+              </Textbox>
+            </ReportItems>
+          </Rectangle>
+          <!-- Earnings Section -->
+          <Rectangle Name="Earnings">
+            <Top>2.55in</Top>
+            <Left>0.25in</Left>
+            <Height>0.8in</Height>
+            <Width>3.125in</Width>
+            <ZIndex>5</ZIndex>
+            <Style>
+              <Border>
+                <Style>Solid</Style>
+                <Color>#336699</Color>
+              </Border>
+              <BackgroundColor>#F5FFFA</BackgroundColor> <!-- Mint Cream - good for earnings -->
+              <ShadowOffset>2pt</ShadowOffset>
+            </Style>
+            <ReportItems>
+              <Textbox Name="EarningsTitle">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>EARNINGS</Value>
+                        <Style>
+                          <FontWeight>Bold</FontWeight>
+                          <FontSize>11pt</FontSize>
+                          <Color>White</Color>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style>
+                      <TextAlign>Center</TextAlign>
+                    </Style>
+                  </Paragraph>
+                </Paragraphs>
+                <Top>0.05in</Top>
+                <Left>0.05in</Left>
+                <Height>0.25in</Height>
+                <Width>3.025in</Width>
+                <Style>
+                  <BackgroundColor>#4682B4</BackgroundColor> <!-- Steel Blue -->
+                  <BorderColor>
+                    <Default>#336699</Default>
+                  </BorderColor>
+                  <BorderStyle>
+                    <Default>Solid</Default>
+                  </BorderStyle>
+                  <VerticalAlign>Middle</VerticalAlign>
+                </Style>
+              </Textbox>
+              <Textbox Name="GrossPayLabel">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>Gross Pay</Value>
+                        <Style>
+                          <FontWeight>Bold</FontWeight>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style />
+                  </Paragraph>
+                </Paragraphs>
+                <Top>0.3in</Top>
+                <Left>0.1in</Left>
+                <Height>0.2in</Height>
+                <Width>1in</Width>
+                <ZIndex>1</ZIndex>
+                <Style />
+              </Textbox>
+              <Textbox Name="GrossPayValue">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>=FORMAT(First(Fields!GrossPay.Value), "#,0.00")</Value>
+                        <Style />
+                      </TextRun>
+                    </TextRuns>
+                    <Style>
+                      <TextAlign>Right</TextAlign>
+                    </Style>
+                  </Paragraph>
+                </Paragraphs>
+                <Top>0.3in</Top>
+                <Left>1.9in</Left>
+                <Height>0.2in</Height>
+                <Width>1in</Width>
+                <ZIndex>2</ZIndex>
+                <Style />
+              </Textbox>
+            </ReportItems>
+          </Rectangle>
+          <!-- Deductions Section -->
+          <Rectangle Name="Deductions">
+            <Top>2.55in</Top>
+            <Left>3.625in</Left>
+            <Height>1.8in</Height>
+            <Width>3.125in</Width>
+            <ZIndex>6</ZIndex>
+            <Style>
+              <Border>
+                <Style>Solid</Style>
+                <Color>#336699</Color>
+              </Border>
+              <BackgroundColor>#FFF5F5</BackgroundColor> <!-- Very light pink - suitable for deductions -->
+              <ShadowOffset>2pt</ShadowOffset>
+            </Style>
+            <ReportItems>
+              <Textbox Name="DeductionsTitle">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>DEDUCTIONS</Value>
+                        <Style>
+                          <FontWeight>Bold</FontWeight>
+                          <FontSize>11pt</FontSize>
+                          <Color>White</Color>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style>
+                      <TextAlign>Center</TextAlign>
+                    </Style>
+                  </Paragraph>
+                </Paragraphs>
+                <Top>0.05in</Top>
+                <Left>0.05in</Left>
+                <Height>0.25in</Height>
+                <Width>3.025in</Width>
+                <Style>
+                  <BackgroundColor>#CD5C5C</BackgroundColor> <!-- Indian Red - for deductions -->
+                  <BorderColor>
+                    <Default>#993333</Default>
+                  </BorderColor>
+                  <BorderStyle>
+                    <Default>Solid</Default>
+                  </BorderStyle>
+                  <VerticalAlign>Middle</VerticalAlign>
+                </Style>
+              </Textbox>
+              <Textbox Name="SSSLabel">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>SSS Contribution</Value>
+                        <Style />
+                      </TextRun>
+                    </TextRuns>
+                    <Style />
+                  </Paragraph>
+                </Paragraphs>
+                <Top>0.3in</Top>
+                <Left>0.1in</Left>
+                <Height>0.2in</Height>
+                <Width>1.5in</Width>
+                <ZIndex>1</ZIndex>
+                <Style />
+              </Textbox>
+              <Textbox Name="SSSValue">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>=FORMAT(First(Fields!SSSAmount.Value), "#,0.00")</Value>
+                        <Style />
+                      </TextRun>
+                    </TextRuns>
+                    <Style>
+                      <TextAlign>Right</TextAlign>
+                    </Style>
+                  </Paragraph>
+                </Paragraphs>
+                <Top>0.3in</Top>
+                <Left>1.9in</Left>
+                <Height>0.2in</Height>
+                <Width>1in</Width>
+                <ZIndex>2</ZIndex>
+                <Style />
+              </Textbox>
+              <Textbox Name="PagibigLabel">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>Pag-IBIG Contribution</Value>
+                        <Style />
+                      </TextRun>
+                    </TextRuns>
+                    <Style />
+                  </Paragraph>
+                </Paragraphs>
+                <Top>0.5in</Top>
+                <Left>0.1in</Left>
+                <Height>0.2in</Height>
+                <Width>1.5in</Width>
+                <ZIndex>3</ZIndex>
+                <Style />
+              </Textbox>
+              <Textbox Name="PagibigValue">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>=FORMAT(First(Fields!PagibigAmt.Value), "#,0.00")</Value>
+                        <Style />
+                      </TextRun>
+                    </TextRuns>
+                    <Style>
+                      <TextAlign>Right</TextAlign>
+                    </Style>
+                  </Paragraph>
+                </Paragraphs>
+                <Top>0.5in</Top>
+                <Left>1.9in</Left>
+                <Height>0.2in</Height>
+                <Width>1in</Width>
+                <ZIndex>4</ZIndex>
+                <Style />
+              </Textbox>
+              <Textbox Name="PhilHealthLabel">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>PhilHealth Contribution</Value>
+                        <Style />
+                      </TextRun>
+                    </TextRuns>
+                    <Style />
+                  </Paragraph>
+                </Paragraphs>
+                <Top>0.7in</Top>
+                <Left>0.1in</Left>
+                <Height>0.2in</Height>
+                <Width>1.5in</Width>
+                <ZIndex>5</ZIndex>
+                <Style />
+              </Textbox>
+              <Textbox Name="PhilHealthValue">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>=FORMAT(First(Fields!PhilHealthAmt.Value), "#,0.00")</Value>
+                        <Style />
+                      </TextRun>
+                    </TextRuns>
+                    <Style>
+                      <TextAlign>Right</TextAlign>
+                    </Style>
+                  </Paragraph>
+                </Paragraphs>
+                <Top>0.7in</Top>
+                <Left>1.9in</Left>
+                <Height>0.2in</Height>
+                <Width>1in</Width>
+                <ZIndex>6</ZIndex>
+                <Style />
+              </Textbox>
+              <Textbox Name="TaxLabel">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>Withholding Tax</Value>
+                        <Style />
+                      </TextRun>
+                    </TextRuns>
+                    <Style />
+                  </Paragraph>
+                </Paragraphs>
+                <Top>0.9in</Top>
+                <Left>0.1in</Left>
+                <Height>0.2in</Height>
+                <Width>1.5in</Width>
+                <ZIndex>7</ZIndex>
+                <Style />
+              </Textbox>
+              <Textbox Name="TaxValue">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>=FORMAT(First(Fields!TaxAmount.Value), "#,0.00")</Value>
+                        <Style />
+                      </TextRun>
+                    </TextRuns>
+                    <Style>
+                      <TextAlign>Right</TextAlign>
+                    </Style>
+                  </Paragraph>
+                </Paragraphs>
+                <Top>0.9in</Top>
+                <Left>1.9in</Left>
+                <Height>0.2in</Height>
+                <Width>1in</Width>
+                <ZIndex>8</ZIndex>
+                <Style />
+              </Textbox>
+              <Textbox Name="OtherDeductionsLabel">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>Other Deductions</Value>
+                        <Style />
+                      </TextRun>
+                    </TextRuns>
+                    <Style />
+                  </Paragraph>
+                </Paragraphs>
+                <Top>1.1in</Top>
+                <Left>0.1in</Left>
+                <Height>0.2in</Height>
+                <Width>1.5in</Width>
+                <ZIndex>9</ZIndex>
+                <Style />
+              </Textbox>
+              <Textbox Name="OtherDeductionsValue">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>=FORMAT(First(Fields!OtherDed.Value), "#,0.00")</Value>
+                        <Style />
+                      </TextRun>
+                    </TextRuns>
+                    <Style>
+                      <TextAlign>Right</TextAlign>
+                    </Style>
+                  </Paragraph>
+                </Paragraphs>
+                <Top>1.1in</Top>
+                <Left>1.9in</Left>
+                <Height>0.2in</Height>
+                <Width>1in</Width>
+                <ZIndex>10</ZIndex>
+                <Style />
+              </Textbox>
+              <Line Name="DeductionSeparator">
+                <Top>1.35in</Top>
+                <Left>0.1in</Left>
+                <Height>0in</Height>
+                <Width>2.8in</Width>
+                <ZIndex>11</ZIndex>
+                <Style>
+                  <Border>
+                    <Style>Solid</Style>
+                  </Border>
+                </Style>
+              </Line>
+              <Textbox Name="TotalDeductionsLabel">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>Total Deductions</Value>
+                        <Style>
+                          <FontWeight>Bold</FontWeight>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style />
+                  </Paragraph>
+                </Paragraphs>
+                <Top>1.4in</Top>
+                <Left>0.1in</Left>
+                <Height>0.2in</Height>
+                <Width>1.5in</Width>
+                <ZIndex>12</ZIndex>
+                <Style />
+              </Textbox>
+              <Textbox Name="TotalDeductionsValue">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>=FORMAT(First(Fields!TotalDeductions.Value), "#,0.00")</Value>
+                        <Style>
+                          <FontWeight>Bold</FontWeight>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style>
+                      <TextAlign>Right</TextAlign>
+                    </Style>
+                  </Paragraph>
+                </Paragraphs>
+                <Top>1.4in</Top>
+                <Left>1.9in</Left>
+                <Height>0.2in</Height>
+                <Width>1in</Width>
+                <ZIndex>13</ZIndex>
+                <Style />
+              </Textbox>
+            </ReportItems>
+          </Rectangle>
+          <!-- Net Pay Section -->
+          <Rectangle Name="NetPay">
+            <Top>3.55in</Top>
+            <Left>0.25in</Left>
+            <Height>0.8in</Height>
+            <Width>3.125in</Width>
+            <ZIndex>7</ZIndex>
+            <Style>
+              <Border>
+                <Style>Solid</Style>
+                <Color>#336699</Color>
+                <Width>1.5pt</Width>
+              </Border>
+              <BackgroundColor>#E6F5FF</BackgroundColor> <!-- Light blue - highlighting net pay -->
+              <ShadowOffset>2pt</ShadowOffset>
+            </Style>
+            <ReportItems>
+              <Textbox Name="NetPayLabel">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>NET PAY</Value>
+                        <Style>
+                          <FontWeight>Bold</FontWeight>
+                          <FontSize>14pt</FontSize>
+                          <Color>#003366</Color>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style>
+                      <LeftIndent>5pt</LeftIndent>
+                    </Style>
+                  </Paragraph>
+                </Paragraphs>
+                <Top>0.1in</Top>
+                <Left>0.1in</Left>
+                <Height>0.3in</Height>
+                <Width>1.2in</Width>
+                <Style>
+                  <VerticalAlign>Middle</VerticalAlign>
+                </Style>
+              </Textbox>
+              <Textbox Name="NetPayValue">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>=FORMAT(First(Fields!NetPay.Value), "#,0.00")</Value>
+                        <Style>
+                          <FontWeight>Bold</FontWeight>
+                          <FontSize>14pt</FontSize>
+                          <Color>#003366</Color>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style>
+                      <TextAlign>Right</TextAlign>
+                    </Style>
+                  </Paragraph>
+                </Paragraphs>
+                <Top>0.1in</Top>
+                <Left>1.4in</Left>
+                <Height>0.3in</Height>
+                <Width>1.5in</Width>
+                <ZIndex>1</ZIndex>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                  <BackgroundColor>#D4E7F7</BackgroundColor>
+                  <VerticalAlign>Middle</VerticalAlign>
+                  <PaddingRight>5pt</PaddingRight>
+                </Style>
+              </Textbox>
+              <Textbox Name="AmountInWordsLabel">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>Amount in Words:</Value>
+                        <Style>
+                          <FontWeight>Bold</FontWeight>
+                          <FontStyle>Italic</FontStyle>
+                          <FontSize>8pt</FontSize>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style />
+                  </Paragraph>
+                </Paragraphs>
+                <Top>0.4in</Top>
+                <Left>0.1in</Left>
+                <Height>0.2in</Height>
+                <Width>1in</Width>
+                <ZIndex>2</ZIndex>
+                <Style />
+              </Textbox>
+              <Textbox Name="AmountInWordsValue">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>=First(Fields!AmountInWords.Value)</Value>
+                        <Style>
+                          <FontStyle>Italic</FontStyle>
+                          <FontSize>8pt</FontSize>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style />
+                  </Paragraph>
+                </Paragraphs>
+                <Top>0.4in</Top>
+                <Left>1.1in</Left>
+                <Height>0.2in</Height>
+                <Width>1.9in</Width>
+                <ZIndex>3</ZIndex>
+                <Style />
+              </Textbox>
+            </ReportItems>
+          </Rectangle>
+          <!-- Signature Section -->
+          <Rectangle Name="Signatures">
+            <Top>4.55in</Top>
+            <Left>0.25in</Left>
+            <Height>1.1in</Height>
+            <Width>6.5in</Width>
+            <ZIndex>8</ZIndex>
+            <Style>
+              <Border>
+                <Style>Solid</Style>
+                <Color>#DDDDDD</Color>
+              </Border>
+              <BackgroundColor>#FAFAFA</BackgroundColor>
+              <ShadowOffset>1pt</ShadowOffset>
+            </Style>
+            <ReportItems>
+              <Textbox Name="PreparedByLabel">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>Prepared by</Value>
+                        <Style>
+                          <FontWeight>Bold</FontWeight>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style>
+                      <TextAlign>Center</TextAlign>
+                    </Style>
+                  </Paragraph>
+                </Paragraphs>
+                <Top>0.6in</Top>
+                <Left>0.25in</Left>
+                <Height>0.2in</Height>
+                <Width>1.5in</Width>
+                <Style />
+              </Textbox>
+              <Line Name="PreparedByLine">
+                <Top>0.55in</Top>
+                <Left>0.25in</Left>
+                <Height>0in</Height>
+                <Width>1.5in</Width>
+                <ZIndex>1</ZIndex>
+                <Style>
+                  <Border>
+                    <Style>Solid</Style>
+                  </Border>
+                </Style>
+              </Line>
+              <Textbox Name="ApprovedByLabel">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>Approved by</Value>
+                        <Style>
+                          <FontWeight>Bold</FontWeight>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style>
+                      <TextAlign>Center</TextAlign>
+                    </Style>
+                  </Paragraph>
+                </Paragraphs>
+                <Top>0.6in</Top>
+                <Left>2.5in</Left>
+                <Height>0.2in</Height>
+                <Width>1.5in</Width>
+                <ZIndex>2</ZIndex>
+                <Style />
+              </Textbox>
+              <Line Name="ApprovedByLine">
+                <Top>0.55in</Top>
+                <Left>2.5in</Left>
+                <Height>0in</Height>
+                <Width>1.5in</Width>
+                <ZIndex>3</ZIndex>
+                <Style>
+                  <Border>
+                    <Style>Solid</Style>
+                  </Border>
+                </Style>
+              </Line>
+              <Textbox Name="ReceivedByLabel">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>Received by</Value>
+                        <Style>
+                          <FontWeight>Bold</FontWeight>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style>
+                      <TextAlign>Center</TextAlign>
+                    </Style>
+                  </Paragraph>
+                </Paragraphs>
+                <Top>0.6in</Top>
+                <Left>4.75in</Left>
+                <Height>0.2in</Height>
+                <Width>1.5in</Width>
+                <ZIndex>4</ZIndex>
+                <Style />
+              </Textbox>
+              <Line Name="ReceivedByLine">
+                <Top>0.55in</Top>
+                <Left>4.75in</Left>
+                <Height>0in</Height>
+                <Width>1.5in</Width>
+                <ZIndex>5</ZIndex>
+                <Style>
+                  <Border>
+                    <Style>Solid</Style>
+                  </Border>
+                </Style>
+              </Line>
+              <Textbox Name="DateLabel">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>Date</Value>
+                        <Style>
+                          <FontWeight>Bold</FontWeight>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style>
+                      <TextAlign>Center</TextAlign>
+                    </Style>
+                  </Paragraph>
+                </Paragraphs>
+                <Top>0.8in</Top>
+                <Left>4.75in</Left>
+                <Height>0.2in</Height>
+                <Width>1.5in</Width>
+                <ZIndex>6</ZIndex>
+                <Style />
+              </Textbox>
+            </ReportItems>
+            <!-- Signatures are always visible -->
+            <Visibility>
+              <Hidden>false</Hidden>
+            </Visibility>
+          </Rectangle>
+        </ReportItems>
+      </Body>
+      <Width>7in</Width>
+      <Page>
+        <Style />
+      </Page>
+    </ReportSection>
+  </ReportSections>
+  <ReportParameters>
+    <ReportParameter Name="PayslipLbl">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>PayslipLbl</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>PayslipLbl</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="EmployeeNoLbl">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>EmployeeNoLbl</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>EmployeeNoLbl</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="EmployeeNameLbl">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>EmployeeNameLbl</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>EmployeeNameLbl</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="PayPeriodLbl">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>PayPeriodLbl</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>PayPeriodLbl</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="ToLbl">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>ToLbl</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>ToLbl</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="EarningsLbl">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>EarningsLbl</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>EarningsLbl</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="DeductionsLbl">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>DeductionsLbl</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>DeductionsLbl</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="GrossPayLbl">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>GrossPayLbl</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>GrossPayLbl</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="RegularHoursLbl">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>RegularHoursLbl</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>RegularHoursLbl</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="OvertimeHoursLbl">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>OvertimeHoursLbl</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>OvertimeHoursLbl</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="OvertimeAmountLbl">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>OvertimeAmountLbl</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>OvertimeAmountLbl</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="SSSLbl">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>SSSLbl</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>SSSLbl</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="PagibigLbl">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>PagibigLbl</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>PagibigLbl</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="PhilHealthLbl">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>PhilHealthLbl</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>PhilHealthLbl</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="TaxLbl">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>TaxLbl</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>TaxLbl</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="OtherDeductionsLbl">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>OtherDeductionsLbl</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>OtherDeductionsLbl</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="TotalDeductionsLbl">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>TotalDeductionsLbl</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>TotalDeductionsLbl</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="NetPayLbl">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>NetPayLbl</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>NetPayLbl</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="AmountInWordsLbl">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>AmountInWordsLbl</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>AmountInWordsLbl</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="PreparedByLbl">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>PreparedByLbl</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>PreparedByLbl</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="ApprovedByLbl">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>ApprovedByLbl</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>ApprovedByLbl</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="ReceivedByLbl">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>ReceivedByLbl</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>ReceivedByLbl</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="DateLbl">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>DateLbl</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>DateLbl</Prompt>
+    </ReportParameter>
+  </ReportParameters>
+  <ReportParametersLayout>
+    <GridLayoutDefinition>
+      <NumberOfColumns>1</NumberOfColumns>
+      <NumberOfRows>23</NumberOfRows>
+      <CellDefinitions>
+        <CellDefinition>
+          <ColumnIndex>0</ColumnIndex>
+          <RowIndex>0</RowIndex>
+          <ParameterName>PayslipLbl</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>0</ColumnIndex>
+          <RowIndex>1</RowIndex>
+          <ParameterName>EmployeeNoLbl</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>0</ColumnIndex>
+          <RowIndex>2</RowIndex>
+          <ParameterName>EmployeeNameLbl</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>0</ColumnIndex>
+          <RowIndex>3</RowIndex>
+          <ParameterName>PayPeriodLbl</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>0</ColumnIndex>
+          <RowIndex>4</RowIndex>
+          <ParameterName>ToLbl</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>0</ColumnIndex>
+          <RowIndex>5</RowIndex>
+          <ParameterName>EarningsLbl</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>0</ColumnIndex>
+          <RowIndex>6</RowIndex>
+          <ParameterName>DeductionsLbl</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>0</ColumnIndex>
+          <RowIndex>7</RowIndex>
+          <ParameterName>GrossPayLbl</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>0</ColumnIndex>
+          <RowIndex>8</RowIndex>
+          <ParameterName>RegularHoursLbl</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>0</ColumnIndex>
+          <RowIndex>9</RowIndex>
+          <ParameterName>OvertimeHoursLbl</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>0</ColumnIndex>
+          <RowIndex>10</RowIndex>
+          <ParameterName>OvertimeAmountLbl</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>0</ColumnIndex>
+          <RowIndex>11</RowIndex>
+          <ParameterName>SSSLbl</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>0</ColumnIndex>
+          <RowIndex>12</RowIndex>
+          <ParameterName>PagibigLbl</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>0</ColumnIndex>
+          <RowIndex>13</RowIndex>
+          <ParameterName>PhilHealthLbl</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>0</ColumnIndex>
+          <RowIndex>14</RowIndex>
+          <ParameterName>TaxLbl</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>0</ColumnIndex>
+          <RowIndex>15</RowIndex>
+          <ParameterName>OtherDeductionsLbl</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>0</ColumnIndex>
+          <RowIndex>16</RowIndex>
+          <ParameterName>TotalDeductionsLbl</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>0</ColumnIndex>
+          <RowIndex>17</RowIndex>
+          <ParameterName>NetPayLbl</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>0</ColumnIndex>
+          <RowIndex>18</RowIndex>
+          <ParameterName>AmountInWordsLbl</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>0</ColumnIndex>
+          <RowIndex>19</RowIndex>
+          <ParameterName>PreparedByLbl</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>0</ColumnIndex>
+          <RowIndex>20</RowIndex>
+          <ParameterName>ApprovedByLbl</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>0</ColumnIndex>
+          <RowIndex>21</RowIndex>
+          <ParameterName>ReceivedByLbl</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>0</ColumnIndex>
+          <RowIndex>22</RowIndex>
+          <ParameterName>DateLbl</ParameterName>
+        </CellDefinition>
+      </CellDefinitions>
+    </GridLayoutDefinition>
+  </ReportParametersLayout>
+  <rd:ReportUnitType>Inch</rd:ReportUnitType>
+  <rd:ReportID>1234abcd-5678-90ab-cdef-000000000000</rd:ReportID>
+  <DataSets>
+    <DataSet Name="DataSet_Result">
+      <Fields>
+        <Field Name="CompanyName">
+          <DataField>CompanyName</DataField>
+        </Field>
+        <Field Name="CompanyAddress">
+          <DataField>CompanyAddress</DataField>
+        </Field>
+        <Field Name="ReportTitle">
+          <DataField>ReportTitle</DataField>
+        </Field>
+        <Field Name="EntryNo">
+          <DataField>EntryNo</DataField>
+        </Field>
+        <Field Name="EmployeeId">
+          <DataField>EmployeeId</DataField>
+        </Field>
+        <Field Name="EmployeeName">
+          <DataField>EmployeeName</DataField>
+        </Field>
+        <Field Name="PeriodStart">
+          <DataField>PeriodStart</DataField>
+        </Field>
+        <Field Name="PeriodEnd">
+          <DataField>PeriodEnd</DataField>
+        </Field>
+        <Field Name="PostDate">
+          <DataField>PostDate</DataField>
+        </Field>
+        <Field Name="GrossPay">
+          <DataField>GrossPay</DataField>
+        </Field>
+        <Field Name="GrossPayFormat">
+          <DataField>GrossPayFormat</DataField>
+        </Field>
+        <Field Name="SSSAmount">
+          <DataField>SSSAmount</DataField>
+        </Field>
+        <Field Name="SSSAmountFormat">
+          <DataField>SSSAmountFormat</DataField>
+        </Field>
+        <Field Name="PagibigAmt">
+          <DataField>PagibigAmt</DataField>
+        </Field>
+        <Field Name="PagibigAmtFormat">
+          <DataField>PagibigAmtFormat</DataField>
+        </Field>
+        <Field Name="PhilHealthAmt">
+          <DataField>PhilHealthAmt</DataField>
+        </Field>
+        <Field Name="PhilHealthAmtFormat">
+          <DataField>PhilHealthAmtFormat</DataField>
+        </Field>
+        <Field Name="TaxAmount">
+          <DataField>TaxAmount</DataField>
+        </Field>
+        <Field Name="TaxAmountFormat">
+          <DataField>TaxAmountFormat</DataField>
+        </Field>
+        <Field Name="OtherDed">
+          <DataField>OtherDed</DataField>
+        </Field>
+        <Field Name="OtherDedFormat">
+          <DataField>OtherDedFormat</DataField>
+        </Field>
+        <Field Name="TotalDeductions">
+          <DataField>TotalDeductions</DataField>
+        </Field>
+        <Field Name="TotalDeductionsFormat">
+          <DataField>TotalDeductionsFormat</DataField>
+        </Field>
+        <Field Name="NetPay">
+          <DataField>NetPay</DataField>
+        </Field>
+        <Field Name="NetPayFormat">
+          <DataField>NetPayFormat</DataField>
+        </Field>
+        <Field Name="AmountInWords">
+          <DataField>AmountInWords</DataField>
+        </Field>
+      </Fields>
+      <Query>
+        <DataSourceName>DataSource</DataSourceName>
+        <CommandText />
+      </Query>
+    </DataSet>
+  </DataSets>
+</Report>
