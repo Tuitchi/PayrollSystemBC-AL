@@ -440,16 +440,20 @@ page 50103 "Payroll Entry Card"
 
     local procedure FetchCurrentRates()
     begin
-        // Get the current rate percentages from Payroll Setup
+        // Get payroll setup record
         if not PayrollSetup.Get('DEFAULT') then begin
-            // If no setup record exists, create one with default values
-            Clear(PayrollSetup);
-            PayrollSetup.Init();
-            PayrollSetup.PrimaryKey := 'DEFAULT';
-            PayrollSetup.SSS_Contribution_Pct := 4.5;  // Default SSS rate
-            PayrollSetup.PagIBIG_Contribution_Pct := 2; // Default Pag-IBIG rate
-            PayrollSetup.PhilHealth_Contribution_Pct := 3; // Default PhilHealth rate
-            if PayrollSetup.Insert(true) then; // Use Insert(true) to suppress errors
+            Error('Payroll Setup not found. Please set up mandatory contributions in the Payroll Setup page.');
+            Page.Run(Page::"PH Payroll Setup");
+            exit;
+        end;
+
+        // Check if mandatory contributions are set
+        if (PayrollSetup.SSS_Contribution_Pct = 0) or
+           (PayrollSetup.PagIBIG_Contribution_Pct = 0) or
+           (PayrollSetup.PhilHealth_Contribution_Pct = 0) then begin
+            Error('One or more mandatory contribution rates are not set. Please configure them in the Payroll Setup page.');
+            Page.Run(Page::"PH Payroll Setup");
+            exit;
         end;
 
         // Set the rate variables for display

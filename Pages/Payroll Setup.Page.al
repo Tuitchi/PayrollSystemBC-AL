@@ -1,7 +1,7 @@
 page 50101 "PH Payroll Setup"
 {
     ApplicationArea = All;
-    Caption = 'PH Payroll Setup';
+    Caption = 'Payroll Setup';
     PageType = Card;
     SourceTable = "PH Payroll Setup";
     UsageCategory = Administration;

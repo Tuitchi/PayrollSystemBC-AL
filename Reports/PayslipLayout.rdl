@@ -25,7 +25,8 @@
             <Height>0.8in</Height>
             <Width>6.8in</Width>
             <Style>
-              <BackgroundColor>#F0F8FF</BackgroundColor> <!-- Light blue header -->
+              <BackgroundColor>#F0F8FF</BackgroundColor>
+              <!-- Light blue header -->
               <Border>
                 <Style>Solid</Style>
                 <Color>#336699</Color>
@@ -33,7 +34,6 @@
               </Border>
             </Style>
           </Rectangle>
-
           <Textbox Name="CompanyName">
             <CanGrow>true</CanGrow>
             <KeepTogether>true</KeepTogether>
@@ -327,7 +327,8 @@
                 <Style>Solid</Style>
                 <Color>#336699</Color>
               </Border>
-              <BackgroundColor>#F5FFFA</BackgroundColor> <!-- Mint Cream - good for earnings -->
+              <BackgroundColor>#F5FFFA</BackgroundColor>
+              <!-- Mint Cream - good for earnings -->
               <ShadowOffset>2pt</ShadowOffset>
             </Style>
             <ReportItems>
@@ -356,13 +357,12 @@
                 <Height>0.25in</Height>
                 <Width>3.025in</Width>
                 <Style>
-                  <BackgroundColor>#4682B4</BackgroundColor> <!-- Steel Blue -->
-                  <BorderColor>
-                    <Default>#336699</Default>
-                  </BorderColor>
-                  <BorderStyle>
-                    <Default>Solid</Default>
-                  </BorderStyle>
+                  <BackgroundColor>#4682B4</BackgroundColor>
+                  <!-- Steel Blue -->
+                  <Border>
+                    <Style>Solid</Style>
+                    <Color>#336699</Color>
+                  </Border>
                   <VerticalAlign>Middle</VerticalAlign>
                 </Style>
               </Textbox>
@@ -426,7 +426,8 @@
                 <Style>Solid</Style>
                 <Color>#336699</Color>
               </Border>
-              <BackgroundColor>#FFF5F5</BackgroundColor> <!-- Very light pink - suitable for deductions -->
+              <BackgroundColor>#FFF5F5</BackgroundColor>
+              <!-- Very light pink - suitable for deductions -->
               <ShadowOffset>2pt</ShadowOffset>
             </Style>
             <ReportItems>
@@ -455,13 +456,12 @@
                 <Height>0.25in</Height>
                 <Width>3.025in</Width>
                 <Style>
-                  <BackgroundColor>#CD5C5C</BackgroundColor> <!-- Indian Red - for deductions -->
-                  <BorderColor>
-                    <Default>#993333</Default>
-                  </BorderColor>
-                  <BorderStyle>
-                    <Default>Solid</Default>
-                  </BorderStyle>
+                  <BackgroundColor>#CD5C5C</BackgroundColor>
+                  <!-- Indian Red - for deductions -->
+                  <Border>
+                    <Style>Solid</Style>
+                    <Color>#993333</Color>
+                  </Border>
                   <VerticalAlign>Middle</VerticalAlign>
                 </Style>
               </Textbox>
@@ -760,7 +760,8 @@
                 <Color>#336699</Color>
                 <Width>1.5pt</Width>
               </Border>
-              <BackgroundColor>#E6F5FF</BackgroundColor> <!-- Light blue - highlighting net pay -->
+              <BackgroundColor>#E6F5FF</BackgroundColor>
+              <!-- Light blue - highlighting net pay -->
               <ShadowOffset>2pt</ShadowOffset>
             </Style>
             <ReportItems>
@@ -780,7 +781,7 @@
                       </TextRun>
                     </TextRuns>
                     <Style>
-                      <LeftIndent>5pt</LeftIndent>
+                      <PaddingLeft>5pt</PaddingLeft>
                     </Style>
                   </Paragraph>
                 </Paragraphs>

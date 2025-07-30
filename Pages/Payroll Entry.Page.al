@@ -195,6 +195,7 @@ page 50102 "Payroll Entry List"
                 Caption = 'Release';
                 Image = ReleaseDoc;
                 ToolTip = 'Change the status of the payroll entry to Released.';
+                Enabled = (Rec.Status = Rec.Status::Draft);
 
                 trigger OnAction()
                 var
@@ -215,6 +216,7 @@ page 50102 "Payroll Entry List"
                 Caption = 'Reopen';
                 Image = ReOpen;
                 ToolTip = 'Change the status of the payroll entry back to Draft.';
+                Enabled = (Rec.Status = Rec.Status::Released);
 
                 trigger OnAction()
                 var
@@ -238,6 +240,7 @@ page 50102 "Payroll Entry List"
                 Promoted = true;
                 PromotedCategory = Process;
                 PromotedIsBig = true;
+                Enabled = (Rec.Status = Rec.Status::Released);
 
                 trigger OnAction()
                 begin
@@ -352,9 +355,14 @@ page 50102 "Payroll Entry List"
         EmployeeRateRec: Record "Employee Data";
         ReportParameters: Text;
     begin
-
         // Get the current record
         PayrollEntry.Get(Rec.EntryNo);
+
+        // Check if the payroll entry status is Released
+        if PayrollEntry.Status <> PayrollEntry.Status::Released then begin
+            Error('Payslip can only be printed when the status is Released.');
+            exit;
+        end;
 
         // Check if employee exists
         if not EmployeeRateRec.Get(PayrollEntry.EmployeeId) then begin

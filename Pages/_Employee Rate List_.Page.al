@@ -5,7 +5,6 @@ page 50100 "Employee Rate List"
     PageType = List;
     SourceTable = "Employee Data";
     UsageCategory = Lists;
-    DeleteAllowed = false;
 
     layout
     {
