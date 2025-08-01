@@ -158,9 +158,9 @@ table 50102 "Payroll Entry"
 
     local procedure CalculateContributions()
     var
-        SSS_Pct: Decimal;
         PagIBIG_Pct: Decimal;
-        PhilHealth_Pct: Decimal;
+        PayrollCalc: Codeunit "Payroll Calculations";
+        CurrentDate: Date;
     begin
         // Always try to get the latest setup
         if not PayrollSetup.Get('DEFAULT') then begin
@@ -174,15 +174,18 @@ table 50102 "Payroll Entry"
         // Always refresh the record to get latest values
         PayrollSetup.Find(); // Refresh the record
 
-        // Get percentages from Payroll Setup
-        SSS_Pct := PayrollSetup.SSS_Contribution_Pct;
-        PagIBIG_Pct := PayrollSetup.PagIBIG_Contribution_Pct;
-        PhilHealth_Pct := PayrollSetup.PhilHealth_Contribution_Pct;
+        // Get current date
+        CurrentDate := WorkDate();
 
-        // Calculate contribution amounts based on percentages
-        SSSAmount := Round(GrossPay * (SSS_Pct / 100), 0.01);
+        // Calculate SSS contribution using the dedicated codeunit
+        SSSAmount := PayrollCalc.CalculateSSS(GrossPay, CurrentDate);
+
+        // Calculate PhilHealth contribution using the dedicated codeunit
+        PhilHealthAmt := PayrollCalc.CalculatePhilHealth(GrossPay, CurrentDate);
+
+        // Calculate Pag-IBIG using percentage from setup
+        PagIBIG_Pct := PayrollSetup.PagIBIG_Contribution_Pct;
         PagibigAmt := Round(GrossPay * (PagIBIG_Pct / 100), 0.01);
-        PhilHealthAmt := Round(GrossPay * (PhilHealth_Pct / 100), 0.01);
     end;
 
     local procedure CalculateTax()
