@@ -5,17 +5,54 @@ table 50104 "PhilHealth Contribution"
 
     fields
     {
-        field(1; "MinSalary"; Decimal) { Caption = 'Minimum Monthly Basic Salary'; }
-        field(2; "MaxSalary"; Decimal) { Caption = 'Maximum Monthly Basic Salary'; }
-        field(3; "PremiumRate"; Decimal) { Caption = 'Premium Rate (%)'; }
-        field(4; "EmployeeShare"; Decimal) { Caption = 'Employee Share'; }
-        field(5; "EmployerShare"; Decimal) { Caption = 'Employer Share'; }
-        field(6; "TotalContribution"; Decimal) { Caption = 'Total Contribution'; }
-        field(7; "EffectiveDate"; Date) { Caption = 'Effective Date'; DataClassification = OrganizationIdentifiableInformation; }
+        field(1; "Entry No."; Code[20])
+        {
+            Caption = 'Entry No.';
+        }
+        field(2; "LowRate"; Decimal)
+        {
+            Caption = 'Low Rate';
+            DecimalPlaces = 2;
+        }
+        field(3; "HighRate"; Decimal)
+        {
+            Caption = 'High Rate';
+            DecimalPlaces = 2;
+        }
+        field(4; "PremiumRate"; Decimal)
+        {
+            Caption = 'Premium Rate (%)';
+            DecimalPlaces = 2;
+        }
+        field(5; "Monthly Premium"; Decimal)
+        {
+            Caption = 'Monthly Premium';
+            DecimalPlaces = 2;
+        }
+        field(6; "EmployeeShare"; Decimal)
+        {
+            Caption = 'Employee Share';
+            DecimalPlaces = 2;
+        }
+        field(7; "EmployerShare"; Decimal)
+        {
+            Caption = 'Employer Share';
+            DecimalPlaces = 2;
+        }
+        field(8; "EffectiveDate"; Date)
+        {
+            Caption = 'Effective Date';
+        }
     }
 
     keys
     {
-        key(PK; "MinSalary", "MaxSalary", "EffectiveDate") { Clustered = true; }
+        key(PK; "Entry No.")
+        {
+            Clustered = true;
+        }
+        key(SalaryRange; "LowRate", "HighRate", "EffectiveDate")
+        {
+        }
     }
 }

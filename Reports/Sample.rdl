@@ -24,6 +24,94 @@
       <rd:DataSourceID>87507f4c-de08-4a78-9506-251ce01b572e</rd:DataSourceID>
     </DataSource>
   </DataSources>
+  <DataSets>
+    <DataSet Name="DataSet_Result">
+      <Query>
+        <DataSourceName>DataSource</DataSourceName>
+        <CommandText />
+      </Query>
+      <Fields>
+        <Field Name="CompanyName">
+          <DataField>CompanyName</DataField>
+        </Field>
+        <Field Name="CompanyAddress">
+          <DataField>CompanyAddress</DataField>
+        </Field>
+        <Field Name="ReportTitle">
+          <DataField>ReportTitle</DataField>
+        </Field>
+        <Field Name="EntryNo">
+          <DataField>EntryNo</DataField>
+        </Field>
+        <Field Name="EmployeeId">
+          <DataField>EmployeeId</DataField>
+        </Field>
+        <Field Name="EmployeeName">
+          <DataField>EmployeeName</DataField>
+        </Field>
+        <Field Name="PeriodStart">
+          <DataField>PeriodStart</DataField>
+        </Field>
+        <Field Name="PeriodEnd">
+          <DataField>PeriodEnd</DataField>
+        </Field>
+        <Field Name="PostDate">
+          <DataField>PostDate</DataField>
+        </Field>
+        <Field Name="GrossPay">
+          <DataField>GrossPay</DataField>
+        </Field>
+        <Field Name="GrossPayFormat">
+          <DataField>GrossPayFormat</DataField>
+        </Field>
+        <Field Name="SSSAmount">
+          <DataField>SSSAmount</DataField>
+        </Field>
+        <Field Name="SSSAmountFormat">
+          <DataField>SSSAmountFormat</DataField>
+        </Field>
+        <Field Name="PagibigAmt">
+          <DataField>PagibigAmt</DataField>
+        </Field>
+        <Field Name="PagibigAmtFormat">
+          <DataField>PagibigAmtFormat</DataField>
+        </Field>
+        <Field Name="PhilHealthAmt">
+          <DataField>PhilHealthAmt</DataField>
+        </Field>
+        <Field Name="PhilHealthAmtFormat">
+          <DataField>PhilHealthAmtFormat</DataField>
+        </Field>
+        <Field Name="TaxAmount">
+          <DataField>TaxAmount</DataField>
+        </Field>
+        <Field Name="TaxAmountFormat">
+          <DataField>TaxAmountFormat</DataField>
+        </Field>
+        <Field Name="OtherDed">
+          <DataField>OtherDed</DataField>
+        </Field>
+        <Field Name="OtherDedFormat">
+          <DataField>OtherDedFormat</DataField>
+        </Field>
+        <Field Name="TotalDeductions">
+          <DataField>TotalDeductions</DataField>
+        </Field>
+        <Field Name="TotalDeductionsFormat">
+          <DataField>TotalDeductionsFormat</DataField>
+        </Field>
+        <Field Name="NetPay">
+          <DataField>NetPay</DataField>
+        </Field>
+        <Field Name="NetPayFormat">
+          <DataField>NetPayFormat</DataField>
+        </Field>
+        <Field Name="AmountInWords">
+          <DataField>AmountInWords</DataField>
+        </Field>
+      </Fields>
+    </DataSet>
+  </DataSets>
   <ReportSections>
     <ReportSection>
       <Body>
@@ -35,7 +123,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>=First(Fields!ReportTitle.Value, "DataSet_Result")</Value>
+                    <Value>=First(Fields!ReportTitle.Value)</Value>
                     <Style>
                       <FontSize>13pt</FontSize>
                       <FontWeight>Bold</FontWeight>
@@ -93,7 +181,7 @@
                   <Paragraph>
                     <TextRuns>
                       <TextRun>
-                        <Value>=First(Fields!EmployeeId.Value, "DataSet_Result")</Value>
+                        <Value>=First(Fields!EmployeeId.Value)</Value>
                         <Style />
                       </TextRun>
                     </TextRuns>
@@ -137,7 +225,7 @@
                   <Paragraph>
                     <TextRuns>
                       <TextRun>
-                        <Value>=First(Fields!EmployeeName.Value, "DataSet_Result")</Value>
+                        <Value>=First(Fields!EmployeeName.Value)</Value>
                         <Style />
                       </TextRun>
                     </TextRuns>
@@ -181,7 +269,7 @@
                   <Paragraph>
                     <TextRuns>
                       <TextRun>
-                        <Value>=FORMAT(First(Fields!PeriodStart.Value, "DataSet_Result"), "MMM dd, yyyy") + " - " + FORMAT(First(Fields!PeriodEnd.Value, "DataSet_Result"), "MMM dd, yyyy")</Value>
+                        <Value>=FORMAT(First(Fields!PeriodStart.Value), "MMM dd, yyyy") + " - " + FORMAT(First(Fields!PeriodEnd.Value), "MMM dd, yyyy")</Value>
                         <Style />
                       </TextRun>
                     </TextRuns>
@@ -225,7 +313,7 @@
                   <Paragraph>
                     <TextRuns>
                       <TextRun>
-                        <Value>=FORMAT(First(Fields!PostDate.Value, "DataSet_Result"), "MMM dd, yyyy")</Value>
+                        <Value>=FORMAT(First(Fields!PostDate.Value), "MMM dd, yyyy")</Value>
                         <Style />
                       </TextRun>
                     </TextRuns>
@@ -319,7 +407,7 @@
                   <Paragraph>
                     <TextRuns>
                       <TextRun>
-                        <Value>=FORMAT(First(Fields!GrossPay.Value, "DataSet_Result"), "#,0.00")</Value>
+                        <Value>=FORMAT(First(Fields!GrossPay.Value), "#,0.00")</Value>
                         <Style />
                       </TextRun>
                     </TextRuns>
@@ -413,7 +501,7 @@
                   <Paragraph>
                     <TextRuns>
                       <TextRun>
-                        <Value>=FORMAT(First(Fields!SSSAmount.Value, "DataSet_Result"), "#,0.00")</Value>
+                        <Value>=FORMAT(First(Fields!SSSAmount.Value), "#,0.00")</Value>
                         <Style />
                       </TextRun>
                     </TextRuns>
@@ -457,7 +545,7 @@
                   <Paragraph>
                     <TextRuns>
                       <TextRun>
-                        <Value>=FORMAT(First(Fields!PagibigAmt.Value, "DataSet_Result"), "#,0.00")</Value>
+                        <Value>=FORMAT(First(Fields!PagibigAmt.Value), "#,0.00")</Value>
                         <Style />
                       </TextRun>
                     </TextRuns>
@@ -501,7 +589,7 @@
                   <Paragraph>
                     <TextRuns>
                       <TextRun>
-                        <Value>=FORMAT(First(Fields!PhilHealthAmt.Value, "DataSet_Result"), "#,0.00")</Value>
+                        <Value>=FORMAT(First(Fields!PhilHealthAmt.Value), "#,0.00")</Value>
                         <Style />
                       </TextRun>
                     </TextRuns>
@@ -545,7 +633,7 @@
                   <Paragraph>
                     <TextRuns>
                       <TextRun>
-                        <Value>=FORMAT(First(Fields!TaxAmount.Value, "DataSet_Result"), "#,0.00")</Value>
+                        <Value>=FORMAT(First(Fields!TaxAmount.Value), "#,0.00")</Value>
                         <Style />
                       </TextRun>
                     </TextRuns>
@@ -589,7 +677,7 @@
                   <Paragraph>
                     <TextRuns>
                       <TextRun>
-                        <Value>=FORMAT(First(Fields!OtherDed.Value, "DataSet_Result"), "#,0.00")</Value>
+                        <Value>=FORMAT(First(Fields!OtherDed.Value), "#,0.00")</Value>
                         <Style />
                       </TextRun>
                     </TextRuns>
@@ -647,7 +735,7 @@
                   <Paragraph>
                     <TextRuns>
                       <TextRun>
-                        <Value>=FORMAT(First(Fields!TotalDeductions.Value, "DataSet_Result"), "#,0.00")</Value>
+                        <Value>=FORMAT(First(Fields!TotalDeductions.Value), "#,0.00")</Value>
                         <Style>
                           <FontWeight>Bold</FontWeight>
                         </Style>
@@ -717,7 +805,7 @@
                   <Paragraph>
                     <TextRuns>
                       <TextRun>
-                        <Value>=FORMAT(First(Fields!NetPay.Value, "DataSet_Result"), "#,0.00")</Value>
+                        <Value>=FORMAT(First(Fields!NetPay.Value), "#,0.00")</Value>
                         <Style>
                           <FontSize>14pt</FontSize>
                           <FontWeight>Bold</FontWeight>
@@ -776,7 +864,7 @@
                   <Paragraph>
                     <TextRuns>
                       <TextRun>
-                        <Value>=First(Fields!AmountInWords.Value, "DataSet_Result")</Value>
+                        <Value>=First(Fields!AmountInWords.Value)</Value>
                         <Style>
                           <FontStyle>Italic</FontStyle>
                           <FontSize>8pt</FontSize>
@@ -994,7 +1082,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=First(Fields!CompanyName.Value, "DataSet_Result")</Value>
+                      <Value>=First(Fields!CompanyName.Value)</Value>
                       <Style>
                         <FontSize>16pt</FontSize>
                         <FontWeight>Bold</FontWeight>
@@ -1530,92 +1618,4 @@ ss4vaeocdeDoHQ4ZAQKq25LUf16vyK2XiUGBpNBAhQ7zyQZ/BcwR8SDO3LT9JhCMYA4cmtsmB2u0BTWp
 ciP3vH6iEd652+0zjNC53r0Dua1fbnTvrKNL4UZrRke+O3r8EAcbRum2TdsdI3PHXGwwHzfMka1f4h3G01B+TmBtyqbcXd4twG7Kh1w2gbUp74psAmtT3hXZBNamvCuyCaxNeVdkE1ib8q7IJrA25V2RTWBtyrsim8DalHdFNoG1Ke+KbAJrU94V2QTWprwrsgmsTXlXZBNYm/KuyCawNuVdkU1gbcq7IpvA2pR3RTaBtSnvimwCa1PeFdkE1qa8K7IJrE15V2QTWJvyrsj/DznfIAmUpTzOAAAAAElFTkSuQmCC</ImageData>
     </EmbeddedImage>
   </EmbeddedImages>
-  <DataSets>
-    <DataSet Name="DataSet_Result">
-      <Fields>
-        <Field Name="CompanyName">
-          <DataField>CompanyName</DataField>
-        </Field>
-        <Field Name="CompanyAddress">
-          <DataField>CompanyAddress</DataField>
-        </Field>
-        <Field Name="ReportTitle">
-          <DataField>ReportTitle</DataField>
-        </Field>
-        <Field Name="EntryNo">
-          <DataField>EntryNo</DataField>
-        </Field>
-        <Field Name="EmployeeId">
-          <DataField>EmployeeId</DataField>
-        </Field>
-        <Field Name="EmployeeName">
-          <DataField>EmployeeName</DataField>
-        </Field>
-        <Field Name="PeriodStart">
-          <DataField>PeriodStart</DataField>
-        </Field>
-        <Field Name="PeriodEnd">
-          <DataField>PeriodEnd</DataField>
-        </Field>
-        <Field Name="PostDate">
-          <DataField>PostDate</DataField>
-        </Field>
-        <Field Name="GrossPay">
-          <DataField>GrossPay</DataField>
-        </Field>
-        <Field Name="GrossPayFormat">
-          <DataField>GrossPayFormat</DataField>
-        </Field>
-        <Field Name="SSSAmount">
-          <DataField>SSSAmount</DataField>
-        </Field>
-        <Field Name="SSSAmountFormat">
-          <DataField>SSSAmountFormat</DataField>
-        </Field>
-        <Field Name="PagibigAmt">
-          <DataField>PagibigAmt</DataField>
-        </Field>
-        <Field Name="PagibigAmtFormat">
-          <DataField>PagibigAmtFormat</DataField>
-        </Field>
-        <Field Name="PhilHealthAmt">
-          <DataField>PhilHealthAmt</DataField>
-        </Field>
-        <Field Name="PhilHealthAmtFormat">
-          <DataField>PhilHealthAmtFormat</DataField>
-        </Field>
-        <Field Name="TaxAmount">
-          <DataField>TaxAmount</DataField>
-        </Field>
-        <Field Name="TaxAmountFormat">
-          <DataField>TaxAmountFormat</DataField>
-        </Field>
-        <Field Name="OtherDed">
-          <DataField>OtherDed</DataField>
-        </Field>
-        <Field Name="OtherDedFormat">
-          <DataField>OtherDedFormat</DataField>
-        </Field>
-        <Field Name="TotalDeductions">
-          <DataField>TotalDeductions</DataField>
-        </Field>
-        <Field Name="TotalDeductionsFormat">
-          <DataField>TotalDeductionsFormat</DataField>
-        </Field>
-        <Field Name="NetPay">
-          <DataField>NetPay</DataField>
-        </Field>
-        <Field Name="NetPayFormat">
-          <DataField>NetPayFormat</DataField>
-        </Field>
-        <Field Name="AmountInWords">
-          <DataField>AmountInWords</DataField>
-        </Field>
-      </Fields>
-      <Query>
-        <DataSourceName>DataSource</DataSourceName>
-        <CommandText />
-      </Query>
-    </DataSet>
-  </DataSets>
 </Report>

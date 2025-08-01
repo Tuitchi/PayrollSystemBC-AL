@@ -17,6 +17,9 @@ page 50100 "Employee Rate List"
                 }
                 field(EmployeeNo; Rec.EmployeeNo)
                 {
+                    Caption = 'Employee No.';
+                    TableRelation = Employee."No.";
+                    LookupPageId = "Employee List";
                 }
                 // First Name and Last Name from Employee table
                 field(FirstName; FirstName)
@@ -31,6 +34,8 @@ page 50100 "Employee Rate List"
                 }
                 field(Position; Rec.Position)
                 {
+                    Caption = 'Position';
+                    Editable = false;
                 }
                 field(Rate; Rec.Rate)
                 {
@@ -62,15 +67,7 @@ page 50100 "Employee Rate List"
                 field(PayFrequency; Rec.PayFrequency)
                 {
                 }
-                field(PayType; Rec.PayType)
-                {
-                }
-                field(OvertimeRate; Rec.OvertimeRate)
-                {
-                }
-                field(HolidayRate; Rec.HolidayRate)
-                {
-                }
+
                 field(SystemCreatedAt; Rec.SystemCreatedAt)
                 {
                 }
@@ -137,6 +134,7 @@ page 50100 "Employee Rate List"
         EmployeeRec: Record Employee;
         FirstName: Text[50];
         LastName: Text[50];
+        Position: Text[50];
 
     trigger OnAfterGetRecord()
     begin
@@ -145,6 +143,7 @@ page 50100 "Employee Rate List"
         if EmployeeRec.Get(Rec.EmployeeNo) then begin
             FirstName := EmployeeRec."First Name";
             LastName := EmployeeRec."Last Name";
+            Position := EmployeeRec."Job Title";
         end;
     end;
 }

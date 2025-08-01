@@ -12,12 +12,12 @@ page 50106 "PhilHealth Contribution List"
         {
             repeater(GroupName)
             {
-                field("MinSalary"; Rec."MinSalary")
+                field("MinSalary"; Rec."LowRate")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the minimum monthly basic salary in the range.';
                 }
-                field("MaxSalary"; Rec."MaxSalary")
+                field("MaxSalary"; Rec."HighRate")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the maximum monthly basic salary in the range.';
@@ -36,11 +36,6 @@ page 50106 "PhilHealth Contribution List"
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the employer share of the PhilHealth contribution.';
-                }
-                field("TotalContribution"; Rec."TotalContribution")
-                {
-                    ApplicationArea = All;
-                    ToolTip = 'Specifies the total contribution amount.';
                 }
                 field("EffectiveDate"; Rec."EffectiveDate")
                 {

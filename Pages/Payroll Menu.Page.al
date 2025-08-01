@@ -59,6 +59,18 @@ page 50105 "Payroll Menu"
                     end;
                 }
 
+                field(DailyTimeRecordsLink; 'Daily Time Records')
+                {
+                    ApplicationArea = All;
+                    ShowCaption = false;
+                    ToolTip = 'View and manage employee attendance records.';
+
+                    trigger OnDrillDown()
+                    begin
+                        Page.Run(50107); // Daily Time Record List
+                    end;
+                }
+
                 field(NewPayrollEntryLink; 'New Payroll Entry')
                 {
                     ApplicationArea = All;

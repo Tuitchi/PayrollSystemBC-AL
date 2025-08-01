@@ -67,7 +67,6 @@ table 50100 "Employee Data"
         }
         field(14; PayType; Option)
         {
-            Caption = 'Pay Type';
             OptionMembers = Salary,Hourly;
             OptionCaption = 'Salary,Hourly';
         }
@@ -86,13 +85,13 @@ table 50100 "Employee Data"
         field(17; FirstName; Text[50])
         {
             Caption = 'First Name';
-            ObsoleteState = Pending;  // Optional: mark as obsolete if you don't plan to use them directly
+            ObsoleteState = Pending;
             ObsoleteReason = 'Using standard Employee table for names';
         }
         field(18; LastName; Text[50])
         {
             Caption = 'Last Name';
-            ObsoleteState = Pending;  // Optional: mark as obsolete if you don't plan to use them directly
+            ObsoleteState = Pending;
             ObsoleteReason = 'Using standard Employee table for names';
         }
         field(19; BasicRate; Decimal)

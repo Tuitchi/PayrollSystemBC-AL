@@ -5,10 +5,9 @@ table 50102 "Payroll Entry"
 
     fields
     {
-        field(1; EntryNo; Integer)
+        field(1; EntryNo; Code[20])
         {
             Caption = 'Entry No.';
-            AutoIncrement = true;
         }
         field(2; EmployeeId; Code[20])
         {
@@ -103,6 +102,29 @@ table 50102 "Payroll Entry"
             OptionMembers = Draft,Released,Posted;
             OptionCaption = 'Draft,Released,Posted';
         }
+        field(14; "PayDate"; Date)
+        {
+            Caption = 'Pay Date';
+            ObsoleteState = Pending;
+            ObsoleteReason = 'Field kept for schema compatibility';
+            Editable = false;
+        }
+        field(15; "PaymentDate"; Date)
+        {
+            Caption = 'Payment Date';
+            ObsoleteState = Pending;
+            ObsoleteReason = 'Field kept for schema compatibility';
+            Editable = false;
+        }
+        field(16; "PayFrequency"; Option)
+        {
+            Caption = 'Pay Frequency';
+            OptionMembers = Monthly,"Semi-Monthly",Weekly,Daily;
+            OptionCaption = 'Monthly,Semi-Monthly,Weekly,Daily';
+            ObsoleteState = Pending;
+            ObsoleteReason = 'Field kept for schema compatibility';
+            Editable = false;
+        }
         field(99; EmployeeNo; Code[20])
         {
             Caption = 'Employee No. (legacy)';
@@ -158,82 +180,28 @@ table 50102 "Payroll Entry"
 
     local procedure CalculateContributions()
     var
-        PagIBIG_Pct: Decimal;
         PayrollCalc: Codeunit "Payroll Calculations";
         CurrentDate: Date;
     begin
-        // Always try to get the latest setup
-        if not PayrollSetup.Get('DEFAULT') then begin
-            // If no setup exists, just create an empty one
-            Clear(PayrollSetup);
-            PayrollSetup.Init();
-            PayrollSetup.PrimaryKey := 'DEFAULT';
-            if PayrollSetup.Insert(true) then; // Use Insert(true) to suppress errors if insert fails
-        end;
-
-        // Always refresh the record to get latest values
-        PayrollSetup.Find(); // Refresh the record
-
-        // Get current date
         CurrentDate := WorkDate();
 
-        // Calculate SSS contribution using the dedicated codeunit
+        // Use codeunit for all calculations
         SSSAmount := PayrollCalc.CalculateSSS(GrossPay, CurrentDate);
-
-        // Calculate PhilHealth contribution using the dedicated codeunit
         PhilHealthAmt := PayrollCalc.CalculatePhilHealth(GrossPay, CurrentDate);
-
-        // Calculate Pag-IBIG using percentage from setup
-        PagIBIG_Pct := PayrollSetup.PagIBIG_Contribution_Pct;
-        PagibigAmt := Round(GrossPay * (PagIBIG_Pct / 100), 0.01);
+        PagibigAmt := PayrollCalc.CalculatePagIBIG(GrossPay);
     end;
 
     local procedure CalculateTax()
     var
-        TaxableIncome: Decimal;
+        PayrollCalc: Codeunit "Payroll Calculations";
     begin
-        // Calculate taxable income (Gross pay minus contributions)
-        TaxableIncome := GrossPay - SSSAmount - PagibigAmt - PhilHealthAmt;
-
-        // Apply tax brackets
-        if TaxableIncome <= PayrollSetup.Tax_Bracket1_Max then
-            TaxAmount := TaxableIncome * (PayrollSetup.Tax_Rate1 / 100)
-        else if TaxableIncome <= PayrollSetup.Tax_Bracket2_Max then
-            TaxAmount := (PayrollSetup.Tax_Bracket1_Max * (PayrollSetup.Tax_Rate1 / 100)) +
-                                ((TaxableIncome - PayrollSetup.Tax_Bracket1_Max) * (PayrollSetup.Tax_Rate2 / 100))
-        else if TaxableIncome <= PayrollSetup.Tax_Bracket3_Max then
-            TaxAmount := (PayrollSetup.Tax_Bracket1_Max * (PayrollSetup.Tax_Rate1 / 100)) +
-                                ((PayrollSetup.Tax_Bracket2_Max - PayrollSetup.Tax_Bracket1_Max) * (PayrollSetup.Tax_Rate2 / 100)) +
-                                ((TaxableIncome - PayrollSetup.Tax_Bracket2_Max) * (PayrollSetup.Tax_Rate3 / 100))
-        else if TaxableIncome <= PayrollSetup.Tax_Bracket4_Max then
-            TaxAmount := (PayrollSetup.Tax_Bracket1_Max * (PayrollSetup.Tax_Rate1 / 100)) +
-                                ((PayrollSetup.Tax_Bracket2_Max - PayrollSetup.Tax_Bracket1_Max) * (PayrollSetup.Tax_Rate2 / 100)) +
-                                ((PayrollSetup.Tax_Bracket3_Max - PayrollSetup.Tax_Bracket2_Max) * (PayrollSetup.Tax_Rate3 / 100)) +
-                                ((TaxableIncome - PayrollSetup.Tax_Bracket3_Max) * (PayrollSetup.Tax_Rate4 / 100))
-        else
-            TaxAmount := (PayrollSetup.Tax_Bracket1_Max * (PayrollSetup.Tax_Rate1 / 100)) +
-                                ((PayrollSetup.Tax_Bracket2_Max - PayrollSetup.Tax_Bracket1_Max) * (PayrollSetup.Tax_Rate2 / 100)) +
-                                ((PayrollSetup.Tax_Bracket3_Max - PayrollSetup.Tax_Bracket2_Max) * (PayrollSetup.Tax_Rate3 / 100)) +
-                                ((PayrollSetup.Tax_Bracket4_Max - PayrollSetup.Tax_Bracket3_Max) * (PayrollSetup.Tax_Rate4 / 100)) +
-                                ((TaxableIncome - PayrollSetup.Tax_Bracket4_Max) * (PayrollSetup.Tax_Rate5 / 100));
+        TaxAmount := PayrollCalc.CalculateTax(GrossPay, SSSAmount, PhilHealthAmt, PagibigAmt);
     end;
 
     local procedure CalculateNetPay()
     var
-        TotalContributions: Decimal;
-        TotalDeductions: Decimal;
+        PayrollCalc: Codeunit "Payroll Calculations";
     begin
-        // Calculate total government-mandated contributions
-        TotalContributions := SSSAmount + PagibigAmt + PhilHealthAmt;
-
-        // Calculate total deductions (contributions + tax + other deductions)
-        TotalDeductions := TotalContributions + TaxAmount + OtherDed;
-
-        // Net Pay = Gross Pay - All Deductions
-        NetPay := GrossPay - TotalDeductions;
-
-        // Ensure NetPay is not negative
-        if NetPay < 0 then
-            NetPay := 0;
+        NetPay := PayrollCalc.CalculateNetPay(GrossPay, SSSAmount, PhilHealthAmt, PagibigAmt, TaxAmount, OtherDed);
     end;
 }

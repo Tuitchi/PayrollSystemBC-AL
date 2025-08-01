@@ -16,7 +16,13 @@ page 50103 "Payroll Entry Card"
                 field(EntryNo; Rec.EntryNo)
                 {
                     ToolTip = 'Specifies the entry number of the payroll entry.';
-                    Editable = false;
+                    Editable = StatusIsDraft;
+
+                    trigger OnAssistEdit()
+                    begin
+                        if Rec.EntryNo = '' then
+                            Rec.EntryNo := GetNextEntryNo();
+                    end;
                 }
                 field(EmployeeId; Rec.EmployeeId)
                 {
@@ -37,9 +43,6 @@ page 50103 "Payroll Entry Card"
                             BankName := EmployeeRateRec.BankName;
                             HireDate := EmployeeRateRec.HireDate;
                             PayFrequency := EmployeeRateRec.PayFrequency;
-                            PayType := EmployeeRateRec.PayType;
-                            OvertimeRate := EmployeeRateRec.OvertimeRate;
-                            HolidayRate := EmployeeRateRec.HolidayRate;
                             Rec.GrossPay := EmployeeRateRec.Rate;
 
                             // Use EmployeeNo to fetch from standard Employee table
@@ -137,7 +140,7 @@ page 50103 "Payroll Entry Card"
                 field(GrossPay; Rec.GrossPay)
                 {
                     Caption = 'Gross Pay';
-                    Editable = false;
+                    Editable = StatusIsDraft;
                 }
             }
 
@@ -289,8 +292,12 @@ page 50103 "Payroll Entry Card"
                     Rec.Modify(true);
                     CurrPage.Update(false);
 
-                    Message('Deductions recalculated using current contribution rates: SSS: %1%, Pag-IBIG: %2%, PhilHealth: %3%',
-                        SSS_Rate, PagIBIG_Rate, PhilHealth_Rate);
+                    if PayrollSetup.Get('DEFAULT') then
+                        Message('Deductions recalculated using contribution rates from setup: SSS: %1%, Pag-IBIG: %2%, PhilHealth: %3%',
+                            SSS_Rate, PagIBIG_Rate, PhilHealth_Rate)
+                    else
+                        Message('Deductions recalculated using default rates: SSS: %1%, Pag-IBIG: %2%, PhilHealth: %3%',
+                            SSS_Rate, PagIBIG_Rate, PhilHealth_Rate);
                 end;
             }
 
@@ -386,9 +393,6 @@ page 50103 "Payroll Entry Card"
             BankName := EmployeeRateRec.BankName;
             HireDate := EmployeeRateRec.HireDate;
             PayFrequency := EmployeeRateRec.PayFrequency;
-            PayType := EmployeeRateRec.PayType;
-            OvertimeRate := EmployeeRateRec.OvertimeRate;
-            HolidayRate := EmployeeRateRec.HolidayRate;
 
             // Use EmployeeNo to fetch from standard Employee table
             if EmployeeRec.Get(EmployeeRateRec.EmployeeNo) then begin
@@ -438,31 +442,40 @@ page 50103 "Payroll Entry Card"
         FetchCurrentRates();
     end;
 
+    trigger OnNewRecord(BelowxRec: Boolean)
+    begin
+        // Initialize new record with reasonable defaults
+        Rec.EntryNo := GetNextEntryNo();
+        Rec.PostDate := WorkDate();
+        Rec.Status := Rec.Status::Draft;
+
+        // Initialize period start/end based on current date
+        Rec.PeriodStart := CalcDate('<-CM>', WorkDate());  // First day of current month
+        Rec.PeriodEnd := CalcDate('<CM>', WorkDate());     // Last day of current month
+
+        StatusIsDraft := true;
+        StatusIsReleased := false;
+
+        FetchCurrentRates();
+    end;
+
     local procedure FetchCurrentRates()
     begin
-        // Get payroll setup record
-        if not PayrollSetup.Get('DEFAULT') then begin
-            Error('Payroll Setup not found. Please set up mandatory contributions in the Payroll Setup page.');
-            Page.Run(Page::"PH Payroll Setup");
-            exit;
+        // Get payroll setup record - make it optional
+        if PayrollSetup.Get('DEFAULT') then begin
+            // Set the rate variables for display if setup exists
+            SSS_Rate := PayrollSetup.SSS_Contribution_Pct;
+            PagIBIG_Rate := PayrollSetup.PagIBIG_Contribution_Pct;
+            PhilHealth_Rate := PayrollSetup.PhilHealth_Contribution_Pct;
+        end else begin
+            // Use default values if no setup exists
+            SSS_Rate := 4.0; // Default 4%
+            PagIBIG_Rate := 2.0; // Default 2%
+            PhilHealth_Rate := 3.0; // Default 3%
         end;
-
-        // Check if mandatory contributions are set
-        if (PayrollSetup.SSS_Contribution_Pct = 0) or
-           (PayrollSetup.PagIBIG_Contribution_Pct = 0) or
-           (PayrollSetup.PhilHealth_Contribution_Pct = 0) then begin
-            Error('One or more mandatory contribution rates are not set. Please configure them in the Payroll Setup page.');
-            Page.Run(Page::"PH Payroll Setup");
-            exit;
-        end;
-
-        // Set the rate variables for display
-        SSS_Rate := PayrollSetup.SSS_Contribution_Pct;
-        PagIBIG_Rate := PayrollSetup.PagIBIG_Contribution_Pct;
-        PhilHealth_Rate := PayrollSetup.PhilHealth_Contribution_Pct;
 
         // Force the recalculation to apply these rates if there's already data
-        if (Rec.EntryNo <> 0) and (Rec.GrossPay <> 0) then begin
+        if (Rec.EntryNo <> '') and (Rec.GrossPay <> 0) then begin
             Rec.Validate(GrossPay, Rec.GrossPay);
             CurrPage.Update(false);
         end;
@@ -483,5 +496,25 @@ page 50103 "Payroll Entry Card"
                 EmployeeHistoryNetPay += PayrollEntry.NetPay;
                 EmployeeHistoryEntries += 1;
             until PayrollEntry.Next() = 0;
+    end;
+
+    local procedure GetNextEntryNo(): Code[20]
+    var
+        PayrollEntry: Record "Payroll Entry";
+        LastEntryNo: Integer;
+        NextEntryNo: Integer;
+    begin
+        PayrollEntry.Reset();
+        if PayrollEntry.FindLast() then begin
+            // Try to convert the last entry number to integer
+            if Evaluate(LastEntryNo, PayrollEntry.EntryNo) then
+                NextEntryNo := LastEntryNo + 1
+            else
+                NextEntryNo := 1;
+        end else
+            NextEntryNo := 1;
+
+        // Format with leading zeros
+        exit(Format(NextEntryNo, 0, '<Integer,10><Filler,0>'));
     end;
 }

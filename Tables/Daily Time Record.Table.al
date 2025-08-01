@@ -5,15 +5,26 @@ table 50105 "Daily Time Record"
 
     fields
     {
-        field(1; "Entry No."; Integer)
+        field(1; "Entry No."; Code[20])
         {
             Caption = 'Entry No.';
-            AutoIncrement = true;
         }
         field(2; "EmployeeId"; Code[20])
         {
             Caption = 'Employee ID';
-            TableRelation = "Employee Data".EmployeeId;
+            TableRelation = Employee."No." where("No." = field(EmployeeId));
+
+            trigger OnLookup()
+            var
+                Employee: Record Employee;
+                EmployeeList: Page "Employee List";
+            begin
+                EmployeeList.LookupMode(true);
+                if EmployeeList.RunModal() = Action::LookupOK then begin
+                    EmployeeList.GetRecord(Employee);
+                    Rec.EmployeeId := Employee."No.";
+                end;
+            end;
         }
 
         field(3; "Date"; Date)

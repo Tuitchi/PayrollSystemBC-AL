@@ -29,10 +29,6 @@ report 50110 "Payroll Payslip"
             column(PostDate; PostDate) { }
 
             column(GrossPay; GrossPay) { }
-            // Removing fields that don't exist in the Payroll Entry table
-            //column(RegularHours; RegularHours) { }
-            //column(OvertimeHours; OvertimeHours) { }
-            //column(OvertimeAmount; OvertimeAmount) { }
 
             column(SSSAmount; SSSAmount) { }
             column(PagibigAmt; PagibigAmt) { }

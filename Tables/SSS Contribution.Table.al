@@ -5,19 +5,59 @@ table 50103 "SSS Contribution"
 
     fields
     {
-        field(1; "LowRate"; Decimal) { Caption = 'Low Rate'; }
-        field(2; "HighRate"; Decimal) { Caption = 'High Rate'; }
-        field(3; "MSC"; Decimal) { Caption = 'Monthly Salary Credit'; }
-        field(4; "EmployeeShare"; Decimal) { Caption = 'Employee Share'; }
-        field(5; "EmployerShare"; Decimal) { Caption = 'Employer Share'; }
-        field(6; "ECC"; Decimal) { Caption = 'Employer EC Contribution'; }
-        field(7; "TotalContribution"; Decimal) { Caption = 'Total Contribution'; }
-        field(8; "EffectiveDate"; Date) { Caption = 'Effective Date'; DataClassification = OrganizationIdentifiableInformation; }
-
+        field(1; "Entry No."; Code[20])
+        {
+            Caption = 'Entry No.';
+        }
+        field(2; "LowRate"; Decimal)
+        {
+            Caption = 'Low Rate';
+            DecimalPlaces = 2;
+        }
+        field(3; "HighRate"; Decimal)
+        {
+            Caption = 'High Rate';
+            DecimalPlaces = 2;
+        }
+        field(4; "MSC"; Decimal)
+        {
+            Caption = 'Monthly Salary Credit';
+            DecimalPlaces = 2;
+        }
+        field(5; "EmployerShare"; Decimal)
+        {
+            Caption = 'SS Employer Share';
+            DecimalPlaces = 2;
+        }
+        field(6; "EmployeeShare"; Decimal)
+        {
+            Caption = 'SS Employee Share';
+            DecimalPlaces = 2;
+        }
+        field(7; "ECC"; Decimal)
+        {
+            Caption = 'EC Employer Share';
+            DecimalPlaces = 2;
+        }
+        field(8; "TotalContribution"; Decimal)
+        {
+            Caption = 'Total Contribution';
+            DecimalPlaces = 2;
+        }
+        field(9; "EffectiveDate"; Date)
+        {
+            Caption = 'Effective Date';
+        }
     }
 
     keys
     {
-        key(PK; "LowRate", "HighRate", "EffectiveDate") { Clustered = true; }
+        key(PK; "Entry No.")
+        {
+            Clustered = true;
+        }
+        key(SalaryRange; "LowRate", "HighRate", "EffectiveDate")
+        {
+        }
     }
 }

@@ -72,14 +72,14 @@ codeunit 50105 "PhilHealth Import"
 
         // Create or update PhilHealth Contribution record
         PhilHealthContribution.Reset();
-        PhilHealthContribution.SetRange("MinSalary", MinSalary);
-        PhilHealthContribution.SetRange("MaxSalary", MaxSalary);
+        PhilHealthContribution.SetRange("LowRate", MinSalary);
+        PhilHealthContribution.SetRange("HighRate", MaxSalary);
         PhilHealthContribution.SetRange("EffectiveDate", EffectiveDate);
 
         if not PhilHealthContribution.FindFirst() then begin
             PhilHealthContribution.Init();
-            PhilHealthContribution."MinSalary" := MinSalary;
-            PhilHealthContribution."MaxSalary" := MaxSalary;
+            PhilHealthContribution."LowRate" := MinSalary;
+            PhilHealthContribution."HighRate" := MaxSalary;
             PhilHealthContribution."EffectiveDate" := EffectiveDate;
             PhilHealthContribution.Insert();
         end;
@@ -87,7 +87,6 @@ codeunit 50105 "PhilHealth Import"
         PhilHealthContribution."PremiumRate" := PremiumRate;
         PhilHealthContribution."EmployeeShare" := EmployeeShare;
         PhilHealthContribution."EmployerShare" := EmployerShare;
-        PhilHealthContribution."TotalContribution" := TotalContribution;
         PhilHealthContribution.Modify();
 
         exit(true);
