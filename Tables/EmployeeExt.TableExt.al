@@ -5,6 +5,8 @@ tableextension 50110 "EmployeeExt" extends Employee
         field(50100; Rate; Decimal)
         {
             Caption = 'Rate';
+            ObsoleteState = Pending;
+            ObsoleteReason = 'Field will be removed in a future release';
             DataClassification = CustomerContent;
         }
         field(50101; TIN; Code[20])
@@ -40,8 +42,8 @@ tableextension 50110 "EmployeeExt" extends Employee
         field(50107; PayFrequency; Option)
         {
             Caption = 'Pay Frequency';
-            OptionMembers = Monthly,"Semi-Monthly",Weekly,Daily;
-            OptionCaption = 'Monthly,Semi-Monthly,Weekly,Daily';
+            OptionMembers = Monthly,"Semi-Monthly",Weekly,Daily,Project;
+            OptionCaption = 'Monthly,Semi-Monthly,Weekly,Daily,Project-Based';
         }
     }
 }

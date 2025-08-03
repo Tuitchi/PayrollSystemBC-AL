@@ -35,14 +35,14 @@ page 50103 "Payroll Entry Card"
                             EmployeeNo := EmployeeRateRec.EmployeeNo;
                             Position := EmployeeRateRec.Position;
                             EffectivityDate := EmployeeRateRec.EffectivityDate;
-                            TIN := EmployeeRateRec.TIN;
-                            SSS := EmployeeRateRec.SSS;
-                            PhilHealth := EmployeeRateRec.PhilHealth;
-                            PagIBIG := EmployeeRateRec.PagIBIG;
-                            BankAccountNo := EmployeeRateRec.BankAccountNo;
-                            BankName := EmployeeRateRec.BankName;
-                            HireDate := EmployeeRateRec.HireDate;
-                            PayFrequency := EmployeeRateRec.PayFrequency;
+                            if EmployeeRec.Get(EmployeeRateRec.EmployeeNo) then begin
+                                TIN := EmployeeRec.TIN;
+                                SSS := EmployeeRec.SSS;
+                                PhilHealth := EmployeeRec.PhilHealth;
+                                PagIBIG := EmployeeRec.PagIBIG;
+                                BankAccountNo := EmployeeRec.BankAccountNo;
+                                BankName := EmployeeRec.BankName;
+                            end;
                             Rec.GrossPay := EmployeeRateRec.Rate;
 
                             // Use EmployeeNo to fetch from standard Employee table
@@ -88,43 +88,6 @@ page 50103 "Payroll Entry Card"
                 {
                     Caption = 'Bank Name';
                     Editable = false;
-                }
-                field(HireDate; HireDate)
-                {
-                    Caption = 'Hire Date';
-                    Editable = false;
-                }
-                field(PayFrequency; PayFrequency)
-                {
-                    Caption = 'Pay Frequency';
-                    Editable = false;
-                }
-                field(PayType; PayType)
-                {
-                    Caption = 'Pay Type';
-                    Editable = false;
-                }
-                field(OvertimeRate; OvertimeRate)
-                {
-                    Caption = 'Overtime Rate';
-                    Editable = false;
-                }
-                field(HolidayRate; HolidayRate)
-                {
-                    Caption = 'Holiday Rate';
-                    Editable = false;
-                }
-                field(PeriodStart; Rec.PeriodStart)
-                {
-                    ToolTip = 'Specifies the start date of the payroll period.';
-                }
-                field(PeriodEnd; Rec.PeriodEnd)
-                {
-                    ToolTip = 'Specifies the end date of the payroll period.';
-                }
-                field(PostDate; Rec.PostDate)
-                {
-                    ToolTip = 'Specifies the posting date of the payroll entry.';
                 }
                 field(Status; Rec.Status)
                 {
@@ -181,37 +144,16 @@ page 50103 "Payroll Entry Card"
                 group(AmountsPaid)
                 {
                     Caption = 'Amounts';
-
-                    field(SSS_Rate; SSS_Rate)
-                    {
-                        Caption = 'SSS Rate %';
-                        ToolTip = 'The percentage rate used for SSS from Payroll Setup';
-                        Editable = false;
-                    }
                     field(SSSAmount; Rec.SSSAmount)
                     {
                         Caption = 'SSS Contribution';
                         ToolTip = 'SSS contribution amount for this pay period';
                         Editable = false;
                     }
-
-                    field(PagIBIG_Rate; PagIBIG_Rate)
-                    {
-                        Caption = 'Pag-IBIG Rate %';
-                        ToolTip = 'The percentage rate used for Pag-IBIG from Payroll Setup';
-                        Editable = false;
-                    }
                     field(PagibigAmt; Rec.PagibigAmt)
                     {
                         Caption = 'Pag-IBIG Contribution';
                         ToolTip = 'Pag-IBIG contribution amount for this pay period';
-                        Editable = false;
-                    }
-
-                    field(PhilHealth_Rate; PhilHealth_Rate)
-                    {
-                        Caption = 'PhilHealth Rate %';
-                        ToolTip = 'The percentage rate used for PhilHealth from Payroll Setup';
                         Editable = false;
                     }
                     field(PhilHealthAmt; Rec.PhilHealthAmt)
@@ -279,25 +221,33 @@ page 50103 "Payroll Entry Card"
                 ApplicationArea = All;
                 Caption = 'Calculate';
                 Image = Calculate;
-                ToolTip = 'Recalculate the payroll entry based on the current setup.';
+                ToolTip = 'Recalculate the payroll entry.';
                 Enabled = StatusIsDraft;
 
                 trigger OnAction()
+                var
+                    PayrollCalc: Codeunit "Payroll Calculations";
+                    CurrentDate: Date;
                 begin
-                    // Get the latest rates from Payroll Setup
-                    FetchCurrentRates();
+                    // Use Payroll Calculations codeunit for all deduction and net pay calculations
+                    CurrentDate := WorkDate();
 
-                    // Recalculate all deductions and net pay
-                    Rec.Validate(GrossPay, Rec.GrossPay);
+                    // Calculate SSS, PhilHealth, PagIBIG using codeunit
+                    Rec.SSSAmount := PayrollCalc.CalculateSSS(Rec.GrossPay, CurrentDate);
+                    Rec.PhilHealthAmt := PayrollCalc.CalculatePhilHealth(Rec.GrossPay, CurrentDate);
+                    Rec.PagibigAmt := PayrollCalc.CalculatePagIBIG(Rec.GrossPay);
+
+                    // Calculate Tax using codeunit
+                    Rec.TaxAmount := PayrollCalc.CalculateTax(Rec.GrossPay, Rec.SSSAmount, Rec.PhilHealthAmt, Rec.PagibigAmt);
+
+                    // Calculate Net Pay using codeunit
+                    Rec.NetPay := PayrollCalc.CalculateNetPay(Rec.GrossPay, Rec.SSSAmount, Rec.PhilHealthAmt, Rec.PagibigAmt, Rec.TaxAmount, Rec.OtherDed);
+
                     Rec.Modify(true);
                     CurrPage.Update(false);
 
-                    if PayrollSetup.Get('DEFAULT') then
-                        Message('Deductions recalculated using contribution rates from setup: SSS: %1%, Pag-IBIG: %2%, PhilHealth: %3%',
-                            SSS_Rate, PagIBIG_Rate, PhilHealth_Rate)
-                    else
-                        Message('Deductions recalculated using default rates: SSS: %1%, Pag-IBIG: %2%, PhilHealth: %3%',
-                            SSS_Rate, PagIBIG_Rate, PhilHealth_Rate);
+                    Message('Deductions recalculated using Payroll Calculations codeunit: SSS: %1, Pag-IBIG: %2, PhilHealth: %3',
+                        Rec.SSSAmount, Rec.PagibigAmt, Rec.PhilHealthAmt);
                 end;
             }
 
@@ -337,18 +287,6 @@ page 50103 "Payroll Entry Card"
                 end;
             }
         }
-
-        area(Navigation)
-        {
-            action("Payroll Setup")
-            {
-                ApplicationArea = All;
-                Caption = 'PH Payroll Setup';
-                Image = Setup;
-                RunObject = Page 50101; // "PH Payroll Setup"
-                ToolTip = 'View or modify the payroll setup.';
-            }
-        }
     }
 
     trigger OnAfterGetCurrRecord()
@@ -370,29 +308,21 @@ page 50103 "Payroll Entry Card"
         Clear(PagIBIG);
         Clear(BankAccountNo);
         Clear(BankName);
-        Clear(HireDate);
-        Clear(PayFrequency);
-        Clear(PayType);
-        Clear(OvertimeRate);
-        Clear(HolidayRate);
         Clear(EmployeeHistoryNetPay);
         Clear(EmployeeHistoryEntries);
-        Clear(SSS_Rate);
-        Clear(PagIBIG_Rate);
-        Clear(PhilHealth_Rate);
 
         if EmployeeRateRec.Get(Rec.EmployeeId) then begin
             EmployeeNo := EmployeeRateRec.EmployeeNo;
             Position := EmployeeRateRec.Position;
             EffectivityDate := EmployeeRateRec.EffectivityDate;
-            TIN := EmployeeRateRec.TIN;
-            SSS := EmployeeRateRec.SSS;
-            PhilHealth := EmployeeRateRec.PhilHealth;
-            PagIBIG := EmployeeRateRec.PagIBIG;
-            BankAccountNo := EmployeeRateRec.BankAccountNo;
-            BankName := EmployeeRateRec.BankName;
-            HireDate := EmployeeRateRec.HireDate;
-            PayFrequency := EmployeeRateRec.PayFrequency;
+            if EmployeeRec.Get(EmployeeRateRec.EmployeeNo) then begin
+                TIN := EmployeeRec.TIN;
+                SSS := EmployeeRec.SSS;
+                PhilHealth := EmployeeRec.PhilHealth;
+                PagIBIG := EmployeeRec.PagIBIG;
+                BankAccountNo := EmployeeRec."Bank Account No.";
+                BankName := EmployeeRec.BankName;
+            end;
 
             // Use EmployeeNo to fetch from standard Employee table
             if EmployeeRec.Get(EmployeeRateRec.EmployeeNo) then begin
@@ -401,7 +331,6 @@ page 50103 "Payroll Entry Card"
             end;
 
             // Fetch Payroll Setup for rates
-            FetchCurrentRates();
 
             // Calculate employee history totals
             CalculateEmployeeHistory();
@@ -424,23 +353,8 @@ page 50103 "Payroll Entry Card"
         PagIBIG: Code[20];
         BankAccountNo: Code[30];
         BankName: Text[100];
-        HireDate: Date;
-        PayFrequency: Option Monthly,"Semi-Monthly",Weekly,Daily;
-        PayType: Option Salary,Hourly;
-        OvertimeRate: Decimal;
-        HolidayRate: Decimal;
-        PayrollSetup: Record "PH Payroll Setup";
         EmployeeHistoryNetPay: Decimal;
         EmployeeHistoryEntries: Integer;
-        SSS_Rate: Decimal;
-        PagIBIG_Rate: Decimal;
-        PhilHealth_Rate: Decimal;
-
-    trigger OnOpenPage()
-    begin
-        // Initialize the rates on page open
-        FetchCurrentRates();
-    end;
 
     trigger OnNewRecord(BelowxRec: Boolean)
     begin
@@ -456,29 +370,6 @@ page 50103 "Payroll Entry Card"
         StatusIsDraft := true;
         StatusIsReleased := false;
 
-        FetchCurrentRates();
-    end;
-
-    local procedure FetchCurrentRates()
-    begin
-        // Get payroll setup record - make it optional
-        if PayrollSetup.Get('DEFAULT') then begin
-            // Set the rate variables for display if setup exists
-            SSS_Rate := PayrollSetup.SSS_Contribution_Pct;
-            PagIBIG_Rate := PayrollSetup.PagIBIG_Contribution_Pct;
-            PhilHealth_Rate := PayrollSetup.PhilHealth_Contribution_Pct;
-        end else begin
-            // Use default values if no setup exists
-            SSS_Rate := 4.0; // Default 4%
-            PagIBIG_Rate := 2.0; // Default 2%
-            PhilHealth_Rate := 3.0; // Default 3%
-        end;
-
-        // Force the recalculation to apply these rates if there's already data
-        if (Rec.EntryNo <> '') and (Rec.GrossPay <> 0) then begin
-            Rec.Validate(GrossPay, Rec.GrossPay);
-            CurrPage.Update(false);
-        end;
     end;
 
     local procedure CalculateEmployeeHistory()

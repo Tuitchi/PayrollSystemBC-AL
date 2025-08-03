@@ -12,12 +12,12 @@ page 50106 "PhilHealth Contribution List"
         {
             repeater(GroupName)
             {
-                field("MinSalary"; Rec."LowRate")
+                field("LowRate"; Rec."LowRate")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the minimum monthly basic salary in the range.';
                 }
-                field("MaxSalary"; Rec."HighRate")
+                field("HighRate"; Rec."HighRate")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the maximum monthly basic salary in the range.';

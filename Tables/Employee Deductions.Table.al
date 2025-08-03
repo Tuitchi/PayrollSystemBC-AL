@@ -1,7 +1,9 @@
 table 50113 "Employee Deductions"
 {
-    DataClassification = ToBeClassified;
     Caption = 'Employee Deductions';
+    DataClassification = ToBeClassified;
+    ObsoleteState = Pending;
+    ObsoleteReason = 'Table will be removed in a future release';
 
     fields
     {
@@ -9,46 +11,65 @@ table 50113 "Employee Deductions"
         {
             Caption = 'Entry No.';
         }
-        field(2; "Employee No."; Code[20])
+        field(2; "Employee ID"; Code[20])
         {
-            Caption = 'Employee No.';
-            TableRelation = Employee."No.";
+            Caption = 'Employee ID';
         }
         field(3; "Deduction Type"; Option)
         {
             Caption = 'Deduction Type';
-            OptionMembers = Loan,Advance,"Other Deduction";
-            OptionCaption = 'Loan,Advance,Other Deduction';
+            OptionMembers = Loan,Advance,Other;
+            OptionCaption = 'Loan,Advance,Other';
         }
-        field(4; "Description"; Text[100])
+        field(4; "Deduction Amount"; Decimal)
+        {
+            Caption = 'Deduction Amount';
+        }
+        field(5; "Effective Date"; Date)
+        {
+            Caption = 'Effective Date';
+        }
+        field(6; "Description"; Text[100])
         {
             Caption = 'Description';
         }
-        field(5; "Start Date"; Date)
+        field(7; "Employee No."; Code[20])
+        {
+            Caption = 'Employee No.';
+            ObsoleteState = Pending;
+            ObsoleteReason = 'Field will be removed in a future release';
+        }
+        field(8; "Start Date"; Date)
         {
             Caption = 'Start Date';
+            ObsoleteState = Pending;
+            ObsoleteReason = 'Field will be removed in a future release';
         }
-        field(6; "End Date"; Date)
+        field(9; "End Date"; Date)
         {
             Caption = 'End Date';
+            ObsoleteState = Pending;
+            ObsoleteReason = 'Field will be removed in a future release';
         }
-        field(7; "Amount"; Decimal)
+        field(10; "Amount"; Decimal)
         {
             Caption = 'Amount';
-            DecimalPlaces = 2;
-            MinValue = 0;
+            ObsoleteState = Pending;
+            ObsoleteReason = 'Field will be removed in a future release';
         }
-        field(8; "Remaining Amount"; Decimal)
+        field(11; "Remaining Amount"; Decimal)
         {
             Caption = 'Remaining Amount';
-            DecimalPlaces = 2;
-            MinValue = 0;
+            ObsoleteState = Pending;
+            ObsoleteReason = 'Field will be removed in a future release';
         }
-        field(9; "Status"; Option)
+        field(12; "Status"; Option)
         {
             Caption = 'Status';
-            OptionMembers = Active,Completed,Cancelled;
-            OptionCaption = 'Active,Completed,Cancelled';
+            OptionMembers = Active,Inactive,Completed;
+            OptionCaption = 'Active,Inactive,Completed';
+            ObsoleteState = Pending;
+            ObsoleteReason = 'Field will be removed in a future release';
         }
     }
 
@@ -57,9 +78,6 @@ table 50113 "Employee Deductions"
         key(PK; "Entry No.")
         {
             Clustered = true;
-        }
-        key(EmployeeKey; "Employee No.", "Deduction Type", "Start Date")
-        {
         }
     }
 }

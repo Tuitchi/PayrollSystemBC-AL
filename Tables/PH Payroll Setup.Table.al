@@ -1,129 +1,113 @@
-table 50100 "Employee Data"
+table 50101 "PH Payroll Setup"
 {
-    Caption = 'Employee Data';
+    Caption = 'PH Payroll Setup';
     DataClassification = ToBeClassified;
+    ObsoleteState = Pending;
+    ObsoleteReason = 'Table will be removed in a future release';
 
     fields
     {
-        field(1; EmployeeId; Code[20])
+        field(1; PrimaryKey; Code[10])
         {
-            Caption = 'EmployeeId';
+            Caption = 'Primary Key';
         }
-        field(2; EmployeeNo; Code[20])
+        field(2; "Setup Name"; Text[50])
         {
-            Caption = 'EmployeeNo';
+            Caption = 'Setup Name';
         }
-        field(3; Position; Text[50])
+        field(3; "Setup Value"; Text[100])
         {
-            Caption = 'Position';
+            Caption = 'Setup Value';
         }
-        field(4; Rate; Decimal)
+        field(4; SSS_Contribution_Pct; Decimal)
         {
-            Caption = 'Rate';
-        }
-        field(5; EffectivityDate; Date)
-        {
-            Caption = 'EffectivityDate';
-        }
-        field(6; TIN; Code[20])
-        {
-            Caption = 'TIN';
+            Caption = 'SSS Contribution Percentage';
             ObsoleteState = Pending;
             ObsoleteReason = 'Field will be removed in a future release';
         }
-        field(7; SSS; Code[20])
+        field(5; PagIBIG_Contribution_Pct; Decimal)
         {
-            Caption = 'SSS';
+            Caption = 'PagIBIG Contribution Percentage';
             ObsoleteState = Pending;
             ObsoleteReason = 'Field will be removed in a future release';
         }
-        field(8; PhilHealth; Code[20])
+        field(6; PhilHealth_Contribution_Pct; Decimal)
         {
-            Caption = 'PhilHealth';
+            Caption = 'PhilHealth Contribution Percentage';
             ObsoleteState = Pending;
             ObsoleteReason = 'Field will be removed in a future release';
         }
-        field(9; PagIBIG; Code[20])
+        field(7; Default_Working_Hours; Decimal)
         {
-            Caption = 'PagIBIG';
+            Caption = 'Default Working Hours';
             ObsoleteState = Pending;
             ObsoleteReason = 'Field will be removed in a future release';
         }
-        field(10; BankAccountNo; Code[30])
+        field(8; Default_Working_Days; Decimal)
         {
-            Caption = 'Bank Account No.';
+            Caption = 'Default Working Days';
             ObsoleteState = Pending;
             ObsoleteReason = 'Field will be removed in a future release';
         }
-        field(11; BankName; Text[100])
+        field(9; Tax_Bracket1_Max; Decimal)
         {
-            Caption = 'Bank Name';
+            Caption = 'Tax Bracket 1 Maximum';
             ObsoleteState = Pending;
             ObsoleteReason = 'Field will be removed in a future release';
         }
-        field(12; HireDate; Date)
+        field(10; Tax_Rate1; Decimal)
         {
-            Caption = 'Hire Date';
+            Caption = 'Tax Rate 1';
             ObsoleteState = Pending;
             ObsoleteReason = 'Field will be removed in a future release';
         }
-        field(13; PayFrequency; Option)
+        field(11; Tax_Bracket2_Max; Decimal)
         {
-            Caption = 'Pay Frequency';
-            OptionMembers = Monthly,"Semi-Monthly",Weekly,Daily,Project;
-            OptionCaption = 'Monthly,Semi-Monthly,Weekly,Daily,Project-Based';
+            Caption = 'Tax Bracket 2 Maximum';
             ObsoleteState = Pending;
             ObsoleteReason = 'Field will be removed in a future release';
         }
-        field(14; PayType; Option)
+        field(12; Tax_Rate2; Decimal)
         {
-            Caption = 'Pay Type';
-            OptionMembers = Regular,Overtime,Project;
-            OptionCaption = 'Regular,Overtime,Project-Based';
+            Caption = 'Tax Rate 2';
             ObsoleteState = Pending;
             ObsoleteReason = 'Field will be removed in a future release';
         }
-        field(15; OvertimeRate; Decimal)
+        field(13; Tax_Bracket3_Max; Decimal)
         {
-            Caption = 'Overtime Rate';
+            Caption = 'Tax Bracket 3 Maximum';
             ObsoleteState = Pending;
             ObsoleteReason = 'Field will be removed in a future release';
         }
-        field(16; HolidayRate; Decimal)
+        field(14; Tax_Rate3; Decimal)
         {
-            Caption = 'Holiday Rate';
+            Caption = 'Tax Rate 3';
             ObsoleteState = Pending;
             ObsoleteReason = 'Field will be removed in a future release';
         }
-        field(17; FirstName; Text[50])
+        field(15; Tax_Bracket4_Max; Decimal)
         {
-            Caption = 'First Name';
+            Caption = 'Tax Bracket 4 Maximum';
             ObsoleteState = Pending;
             ObsoleteReason = 'Field will be removed in a future release';
         }
-        field(18; LastName; Text[50])
+        field(16; Tax_Rate4; Decimal)
         {
-            Caption = 'Last Name';
+            Caption = 'Tax Rate 4';
             ObsoleteState = Pending;
             ObsoleteReason = 'Field will be removed in a future release';
         }
-        field(19; BasicRate; Decimal)
+        field(17; Tax_Rate5; Decimal)
         {
-            Caption = 'Basic Rate';
-            ObsoleteState = Pending;
-            ObsoleteReason = 'Field will be removed in a future release';
-        }
-        field(20; AutoId; Integer)
-        {
-            Caption = 'Auto ID';
-            AutoIncrement = true;
+            Caption = 'Tax Rate 5';
             ObsoleteState = Pending;
             ObsoleteReason = 'Field will be removed in a future release';
         }
     }
+
     keys
     {
-        key(PK; EmployeeId)
+        key(PK; PrimaryKey)
         {
             Clustered = true;
         }

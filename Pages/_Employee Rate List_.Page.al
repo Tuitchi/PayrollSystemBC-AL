@@ -32,7 +32,7 @@ page 50100 "Employee Rate List"
                     Caption = 'Last Name';
                     Editable = false;
                 }
-                field(Position; Rec.Position)
+                field(Position; Position)
                 {
                     Caption = 'Position';
                     Editable = false;
@@ -41,30 +41,6 @@ page 50100 "Employee Rate List"
                 {
                 }
                 field(EffectivityDate; Rec.EffectivityDate)
-                {
-                }
-                field(TIN; Rec.TIN)
-                {
-                }
-                field(SSS; Rec.SSS)
-                {
-                }
-                field(PhilHealth; Rec.PhilHealth)
-                {
-                }
-                field(PagIBIG; Rec.PagIBIG)
-                {
-                }
-                field(BankAccountNo; Rec.BankAccountNo)
-                {
-                }
-                field(BankName; Rec.BankName)
-                {
-                }
-                field(HireDate; Rec.HireDate)
-                {
-                }
-                field(PayFrequency; Rec.PayFrequency)
                 {
                 }
 

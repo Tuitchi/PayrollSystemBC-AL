@@ -9,23 +9,6 @@ page 50105 "Payroll Menu"
     {
         area(content)
         {
-            group(Setup)
-            {
-                Caption = 'Setup';
-
-                field(PayrollSetupLink; 'Setup Payroll Parameters')
-                {
-                    ApplicationArea = All;
-                    ShowCaption = false;
-                    ToolTip = 'Setup payroll parameters like contribution rates and tax brackets.';
-
-                    trigger OnDrillDown()
-                    begin
-                        Page.Run(50101); // PH Payroll Setup
-                    end;
-                }
-            }
-
             group(MasterData)
             {
                 Caption = 'Master Data';

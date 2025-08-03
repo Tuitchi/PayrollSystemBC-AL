@@ -102,19 +102,17 @@ table 50102 "Payroll Entry"
             OptionMembers = Draft,Released,Posted;
             OptionCaption = 'Draft,Released,Posted';
         }
-        field(14; "PayDate"; Date)
+        field(14; PayDate; Date)
         {
             Caption = 'Pay Date';
             ObsoleteState = Pending;
-            ObsoleteReason = 'Field kept for schema compatibility';
-            Editable = false;
+            ObsoleteReason = 'Field will be removed in a future release';
         }
-        field(15; "PaymentDate"; Date)
+        field(15; PaymentDate; Date)
         {
             Caption = 'Payment Date';
             ObsoleteState = Pending;
-            ObsoleteReason = 'Field kept for schema compatibility';
-            Editable = false;
+            ObsoleteReason = 'Field will be removed in a future release';
         }
         field(16; "PayFrequency"; Option)
         {
@@ -151,7 +149,6 @@ table 50102 "Payroll Entry"
     }
 
     var
-        PayrollSetup: Record "PH Payroll Setup";
 
     trigger OnInsert()
     begin
