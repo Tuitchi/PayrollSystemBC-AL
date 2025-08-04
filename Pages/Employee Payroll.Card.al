@@ -34,26 +34,19 @@ page 50108 "Employee Payroll Card"
             group(PayrollDetails)
             {
                 Caption = 'Payroll Details';
-                field(PayFrequency; Rec.PayFrequency)
+                field(PayFrequency; EmployeeDataRec.PayFrequency)
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies how often this employee is paid.';
                     Importance = Promoted;
+                    Editable = false;
                 }
-                field(Rate; Rec.Rate)
+                field(Rate; EmployeeDataRec.Rate)
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the base rate for this employee.';
-                    Visible = not IsRateObsolete;
                     Importance = Promoted;
-                }
-                field(AlternativeRateField; Rec.Rate)
-                {
-                    Caption = 'Base Salary';
-                    ApplicationArea = All;
-                    ToolTip = 'Specifies the base salary for monthly employees.';
-                    Visible = IsRateObsolete;
-                    Importance = Promoted;
+                    Editable = false;
                 }
             }
 
@@ -116,6 +109,7 @@ page 50108 "Employee Payroll Card"
     {
         area(Processing)
         {
+
             // action(ViewPayHistory)
             // {
             //     ApplicationArea = All;
@@ -140,9 +134,29 @@ page 50108 "Employee Payroll Card"
 
     trigger OnOpenPage()
     begin
-        IsRateObsolete := Rec.Rate = 0; // Simple check for obsolete field
+        IsRateObsolete := EmployeeDataRec.Rate = 0; // Simple check for obsolete field
+        LoadEmployeeData();
+    end;
+
+    trigger OnAfterGetRecord()
+    begin
+        LoadEmployeeData();
+    end;
+
+    local procedure LoadEmployeeData()
+    begin
+        EmployeeDataRec.Reset();
+        EmployeeDataRec.SetRange(EmployeeId, Rec."No.");
+        if not EmployeeDataRec.FindFirst() then begin
+            // Initialize with default values if no record found
+            EmployeeDataRec.Init();
+            EmployeeDataRec.EmployeeId := Rec."No.";
+            EmployeeDataRec.PayFrequency := EmployeeDataRec.PayFrequency::Monthly;
+            EmployeeDataRec.Rate := 0;
+        end;
     end;
 
     var
+        EmployeeDataRec: Record "Employee Data";
         IsRateObsolete: Boolean;
 }

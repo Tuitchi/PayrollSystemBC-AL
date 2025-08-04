@@ -44,6 +44,8 @@ tableextension 50110 "EmployeeExt" extends Employee
             Caption = 'Pay Frequency';
             OptionMembers = Monthly,"Semi-Monthly",Weekly,Daily,Project;
             OptionCaption = 'Monthly,Semi-Monthly,Weekly,Daily,Project-Based';
+            ObsoleteState = Pending;
+            ObsoleteReason = 'Field will be removed in a future release';
         }
     }
 }

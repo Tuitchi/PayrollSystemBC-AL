@@ -1,0 +1,82 @@
+---
+alwaysApply: true
+---
+START Payroll Process
+   |
+   v
+1. Identify Payroll Period
+   |__ Get payroll period dates
+   |__ Verify period is not closed
+   |
+   v
+2. Retrieve Employee List
+   |__ Filter active employees
+   |__ Check employee assignments
+   |
+   v
+3. For Each Employee:
+   |
+   |--> 3.1 Get Employee Master Data
+   |      |__ Base rate from Employee Rate table
+   |      |__ Pay frequency
+   |      |__ Bank details
+   |
+   |--> 3.2 Calculate Time Components
+   |      |__ Get DTR records for period
+   |      |__ Calculate regular hours
+   |      |__ Calculate overtime (approved OT only)
+   |      |__ Calculate late/undertime deductions
+   |      |__ Apply shift differentials if applicable
+   |
+   |--> 3.3 Calculate Earnings
+   |      |__ Base pay (based on pay frequency)
+   |      |__ Overtime pay
+   |      |__ Holiday pay
+   |      |__ Allowances/bonuses
+   |
+   |--> 3.4 Calculate Deductions
+   |      |__ Statutory deductions (SSS, PhilHealth, Pag-IBIG)
+   |      |__ Withholding tax
+   |      |__ Loans/advances
+   |      |__ Other voluntary deductions
+   |
+   |--> 3.5 Generate Payroll Transaction
+   |      |__ Create payroll file header (if not exists)
+   |      |__ Create transaction lines
+   |      |__ Store YTD totals
+   |
+   v
+4. Finalize Payroll
+   |__ Validate totals
+   |__ Lock payroll period
+   |__ Generate payslips
+   |__ Export bank file
+   |
+   v
+END
+
+
+
+1. Master Data Setup
+   ├── Employee Data (rates, pay frequency)
+   ├── Shift Definitions
+   ├── Shift Assignments
+   └── Contribution Rates (SSS, PhilHealth, Pag-IBIG)
+
+2. Time Tracking
+   ├── Daily Time Records
+   └── Shift-based time calculations
+
+3. Payroll Period Setup
+   ├── Payroll File (master record)
+   └── Department/Period configuration
+
+4. Payroll Processing
+   ├── Payroll Transaction creation (per employee)
+   ├── Automatic calculations (Gross, Deductions, Net)
+   └── Status management (Draft→Processing→Completed)
+
+5. Reporting & Distribution
+   ├── Payslip generation
+   ├── Bank file export
+   └── Audit trail
